@@ -1,35 +1,46 @@
-function myFunction(a,b,c,d)
+function myFunction(symbolAmount,bigAmount,digitAmount,specialAmount)
 {
     var string='';
-    var lettersB='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var lettersS='abcdefghijklmnopqrstuvwxyz';
+    var result='';
+    var all= 'abcdefghijklmnopqrstuvwxyz';
+    var bigLetters='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var digits ='0123456789';
     var special='!@#$%^&*()-=_+[{]{;:",<.>/?`~';
-    var len=a+b+c+d;
-    var result='';
-for ( var i = 0; i < a; i++ )
+
+    if(bigAmount==0)
+        {
+            all+=bigLetters;
+        }
+    if(digitAmount==0)
+        {
+            all+=digits;
+        }
+    if(specialAmount==0)
+        {
+            all+=special;
+        }
+for ( var i = 0; i < symbolAmount-bigAmount-digitAmount-specialAmount; i++ )
 {
- string += lettersS.charAt(Math.floor(Math.random() * 26));
+ string += all.charAt(Math.floor(Math.random() *all.length));
 }
-for ( var i = 0; i < b; i++ )
+for ( var i = 0; i < bigAmount; i++ )
 {
-string += lettersB.charAt(Math.floor(Math.random() * 26));
+string += bigLetters.charAt(Math.floor(Math.random() * bigLetters.length));
 
 }
-for ( var i = 0; i < c; i++ )
+for ( var i = 0; i < digitAmount; i++ )
 {
- string += digits.charAt(Math.floor(Math.random() * 10));
+ string += digits.charAt(Math.floor(Math.random() * digits.length));
 }
-for ( var i = 0; i < d; i++ )
+for ( var i = 0; i < specialAmount; i++ )
 {
- string += special.charAt(Math.floor(Math.random() * 30));
+ string += special.charAt(Math.floor(Math.random() * special.length));
     
 }
-console.log(string);
+
 var result = string.split('').sort(function(){return 0.5-Math.random()}).join('');
 
 return result;
 
 }
-//console.log(myFunction(0,0,5,1));
 
