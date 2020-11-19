@@ -13,23 +13,28 @@
                 <input type="number" name="passlength" id="passlength" min="1" value="5">
             </li>
             <li>
-                <label for="numberOfCapitals">Ilość wielkich liter</label>
-                <input type="number" name="numberOfCapitals" id="numberOfCapitals" min="0" value="0">
+                <label for="Lowers">Używaj małych liter</label>
+                <input type="checkbox" name="Lowers" id="Lowers">
             </li>
             <li>
-                <label for="numberOfDigits">Ilość cyfr</label>
-                <input type="number" name="numberOfDigits" id="numberOfDigits" min="0" value="0">
+                <label for="Capitals">Używaj wielkich liter</label>
+                <input type="checkbox" name="Capitals" id="Capitals">
             </li>
             <li>
-                <label for="numberOfSpecials">Ilość znaków specjalnych</label>
-                <input type="number" name="numberOfSpecials" id="numberOfSpecials" min="0" value="0">
+                <label for="Digits">Używaj cyfr</label>
+                <input type="checkbox" name="Digits" id="Digits">
+            </li>
+            <li>
+                <label for="Specials">Używaj znaków specjalnych</label>
+                <input type="checkbox" name="Specials" id="Specials">
             </li>
         </ul>
         <button>Generuj hasło</button>
         </form>
-        <section class="password" id="password">
+        <section class="password" id="password"></section>
+        <button id="copyButton">Kopiuj</button>
 
-        </section>
+
         <script src="js/passwd_generate.js"></script>
         <script src="js/frontend.js"></script>
     </body>
