@@ -1,8 +1,7 @@
 (function() {
 
-
     const formInstance = document.querySelector('#generator');
-    const output = document.querySelector('#password');
+    const outputPassword = document.querySelector('#password');
 
     const form = {
         getJSON: (form) => {
@@ -27,18 +26,43 @@
 
     formInstance.addEventListener('submit', (e) => {
         const data = form.getJSON(formInstance);
-        var passLength = data.passlength
-        var numberOfCapitals = data.numberOfCapitals;
-        var numberOfDigits = data.numberOfDigits;
-        var numberOfSpecials = data.numberOfSpecials;
+        var passLength = data.passlength;
 
-        if(parseInt(numberOfCapitals) + parseInt(numberOfDigits) + parseInt(numberOfSpecials) > parseInt(passLength)) {
-            alert("Zbyt krótka długość hasła");
-        } else {
-            //output.textContent = numberOfCapitals + numberOfDigits + numberOfSpecials + passLength;
-            output.textContent = myFunction(passLength,numberOfCapitals,numberOfDigits,numberOfSpecials);
+        var lowers      = 0; if(data.Lowers){lowers = 1}
+        var capitals    = 0; if(data.Capitals){capitals = 1}
+        var digits      = 0; if(data.Digits){digits = 1}
+        var specials    = 0; if(data.Specials){specials = 1}
+        var typeSum = lowers + capitals + digits + specials;
+
+        if(typeSum == 0) {
+            alert("Zaznacz przynajmniej jeden rodzaj znaków");
+        }else {
+            if(typeSum > passLength){
+                alert("Zbyt krótka długość hasła");
+            } else{
+                outputPassword.textContent = myFunction(passLength,lowers,capitals,digits,specials);
+            }
         }
 
         e.preventDefault();
+    })
+
+
+    function copyToClipboard(text) {
+        const input = document.createElement('input');
+        input.style.position = 'fixed';
+        input.style.opacity = 0;
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+      };
+
+    const copyButton = document.querySelector('#copyButton')
+    copyButton.addEventListener('click',(e) =>{
+        if(outputPassword.textContent != ' '){
+            copyToClipboard(outputPassword.textContent)
+        }
     })
 })();
