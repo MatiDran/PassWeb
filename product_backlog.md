@@ -12,7 +12,7 @@
 6. Poprawa generatora haseł
 7. Sprawdzenie w jaki sposób dodać dodatek do sklepu google
 8. Połączenie dodatku z bazą danych firebase
-9. Wymyślenie tymczasowego sposobu na przechowywanie haseł
+9. Wymyślenie tymczasowej formy w jakiej będziemy przechowywać hasła na firebase
 10. Dodanie funkcji zapisywania hasła na bazie
 
 11. Szyfrowanie haseł.
