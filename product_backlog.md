@@ -14,10 +14,12 @@
 8. Połączenie dodatku z bazą danych firebase
 9. Wymyślenie tymczasowej formy w jakiej będziemy przechowywać hasła na firebase
 10. Dodanie funkcji zapisywania hasła na bazie
+11. Zmiana UI na oparte o checkboxy
 
-11. Szyfrowanie haseł.
 
-12. Technologia związana z zabezpieczeniem haseł.
+12. Szyfrowanie haseł.
+
+13. Technologia związana z zabezpieczeniem haseł.
 
 
 
