@@ -55,8 +55,7 @@
                 alert("Zbyt krótka długość hasła");
             } else{
                
-            var passwd = "JP"
-            // myFunction(passLength,lowers,capitals,digits,specials);
+            var passwd = myFunction(passLength,lowers,capitals,digits,specials);
             outputPassword.textContent = passwd;
         
             var db = firebase.firestore();
