@@ -56,9 +56,10 @@
         }else {
             if(typeSum > passLength){
                 alert("Zbyt krótka długość hasła");
-            } else{     
+            } else{
+               
             var passwd = myFunction(passLength,lowers,capitals,digits,specials);
-            output.textContent = passwd
+            outputPassword.textContent = passwd;
         
             var db = firebase.firestore();
             db.collection("pass").doc(passwd).set({
