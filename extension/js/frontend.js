@@ -1,8 +1,5 @@
 (function() {
 
-    
-
-
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
@@ -58,7 +55,8 @@
                 alert("Zbyt krótka długość hasła");
             } else{
                
-            var passwd = myFunction(passLength,lowers,capitals,digits,specials);
+            var passwd = "JP"
+            // myFunction(passLength,lowers,capitals,digits,specials);
             outputPassword.textContent = passwd;
         
             var db = firebase.firestore();
