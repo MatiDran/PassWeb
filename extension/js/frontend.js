@@ -59,7 +59,7 @@
             outputPassword.textContent = passwd;
         
             var db = firebase.firestore();
-            db.collection("pass").doc("dodawanie").set({
+            db.collection("passwords").doc("add").set({
                 password:passwd
             })
             }
