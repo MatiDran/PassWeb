@@ -1,4 +1,3 @@
-(function() {
 
     const formInstance = document.querySelector('#generator');
     const outputPassword = document.querySelector('#password');
@@ -47,7 +46,7 @@
         e.preventDefault();
     })
 
-
+    
     function copyToClipboard(text) {
         const input = document.createElement('input');
         input.style.position = 'fixed';
@@ -65,4 +64,45 @@
             copyToClipboard(outputPassword.textContent)
         }
     })
-})();
+    const loginButton = document.querySelector('#loginButton')
+
+    loginButton.addEventListener('click',(e) =>{
+            document.getElementById("loginPanel").style.width = "250px";
+
+        
+    })
+    const closeButton = document.querySelector('#closeButton')
+
+    closeButton.addEventListener('click',(e) =>{
+       
+            document.getElementById("loginPanel").style.width = "0";
+
+        
+    })
+
+    const submitButton = document.querySelector('#submitButton')
+
+    submitButton.addEventListener('click',(e) =>{
+       
+
+       var Useremail =  document.getElementById("usremail").value;
+       var Userpassword =  document.getElementById("usrpassword").value;
+
+       chrome.runtime.sendMessage({command:"loginUser",data:{e: Useremail,p: Userpassword}},(response)=>{
+          
+          if(response.status=='succes')
+          {
+              alert(response.message.uid);
+          }
+          else{
+                alert("not loged in")
+          }
+      });
+
+
+    })
+   
+      
+
+
+

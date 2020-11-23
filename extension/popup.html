@@ -6,6 +6,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+                   
+
+        
+        
         <form name="generator" class="generator" id="generator">
         <ul class="outer">
             <li>
@@ -35,7 +39,23 @@
         <button id="copyButton">Kopiuj</button>
 
 
+        <div id="loginPanel" class="sidepanel">
+            <button class="closebtn" id="closeButton">&times;</button>
+            <a href="#">Email</a>
+            <input type="email" name="usremail" id="usremail" min="4">
+            <a href="#">Hasło</a>
+            <input type="password" name="usrpassword" id="usrpassword" min="5" >
+            <button class="submitbtn" id="submitButton">Zaloguj</button>
+        </div>
+          
+        <button class="openbtn" id="loginButton">&#9776; Zaloguj się</button>
+
+
+           
+
+  
         <script src="js/passwd_generate.js"></script>
         <script src="js/frontend.js"></script>
+
     </body>
 </html>

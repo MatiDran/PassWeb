@@ -54,5 +54,4 @@ return result;
 
 }
 
-console.log(myFunction(4,1,1,1,1))
 
