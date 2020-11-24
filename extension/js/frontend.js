@@ -67,7 +67,7 @@
     const loginButton = document.querySelector('#loginButton')
 
     loginButton.addEventListener('click',(e) =>{
-            document.getElementById("loginPanel").style.width = "250px";
+            document.getElementById("loginPanel").style.width = "200px";
 
         
     })
@@ -81,6 +81,7 @@
     })
 
     const submitButton = document.querySelector('#submitButton')
+    const registerButton = document.querySelector('#registerButton')
 
     submitButton.addEventListener('click',(e) =>{
        
@@ -93,14 +94,37 @@
           if(response.status=='succes')
           {
               alert(response.message.uid);
+
+              // event po poprawnym zalogowaniu 
           }
           else{
-                alert("not loged in")
+                alert("Niepoprawny email lub hasło")
           }
       });
 
 
     })
+
+    registerButton.addEventListener('click',(e) =>{
+       
+
+        var Useremail =  document.getElementById("usremail").value;
+        var Userpassword =  document.getElementById("usrpassword").value;
+ 
+        chrome.runtime.sendMessage({command:"registerUser",data:{e: Useremail,p: Userpassword}},(response)=>{
+           
+           if(response.status=='succes')
+           {
+               alert("Rejestracja powiodła sie");
+               
+           }
+           else{
+                 alert("Rejestracja nie powiodła sie")
+           }
+       });
+ 
+ 
+     })
    
       
 

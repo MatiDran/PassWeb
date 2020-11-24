@@ -41,7 +41,7 @@ var firebaseConfig = {
             console.log(msg.data);
             var email=msg.data.e;
             var password=msg.data.p;
-            firebase.auth().signInWithEmailAndPassword("asdloe@op.pl","password123").catch(function(error){
+            firebase.auth().signInWithEmailAndPassword(email,password).catch(function(error){
                 var errorCode=error.code;
                 var errorMassege=error.message;
                 console.log(error);
@@ -61,5 +61,24 @@ var firebaseConfig = {
                 }
             });
         }
+        if(msg.command=='registerUser')
+        {   var email=msg.data.e;
+            var password=msg.data.p;
+
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then((user) => {
+                    
+                        response({type:"register",status:"succes"});
+
+                    })
+                    .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        response({type:"register",status:"error",message:error});
+
+                    });
+
+        }
+
         return true;
     });
