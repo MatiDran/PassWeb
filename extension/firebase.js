@@ -1,11 +1,11 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyA2d9PD1WxAXcpUART0ayPegfVX7w9ay64",
-    authDomain: "keypass-56278.firebaseapp.com",
-    databaseURL: "https://keypass-56278.firebaseio.com",
-    projectId: "keypass-56278",
-    storageBucket: "keypass-56278.appspot.com",
-    messagingSenderId: "688316073383",
-    appId: "1:688316073383:web:2d2b31b2e20c4b1ea32282"
+    apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
+    authDomain: "keypass-2b5a9.firebaseapp.com",
+    databaseURL: "https://keypass-2b5a9.firebaseio.com",
+    projectId: "keypass-2b5a9",
+    storageBucket: "keypass-2b5a9.appspot.com",
+    messagingSenderId: "608568818489",
+    appId: "1:608568818489:web:0e07b7699bea95a884c6e8"
   };
 
   firebase.initializeApp(firebaseConfig);
