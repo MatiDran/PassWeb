@@ -59,9 +59,19 @@
             outputPassword.textContent = passwd;
         
             var db = firebase.firestore();
-            db.collection("passwords").doc("add").set({
-                password:passwd
+            db.collection("hasla").add({
+                login: "brak",
+                haslo: passwd
             })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+
+
+
             }
         }
 
@@ -85,5 +95,11 @@
         if(outputPassword.textContent != ' '){
             copyToClipboard(outputPassword.textContent)
         }
+    })
+
+    const bazaButton = document.querySelector('#baza')
+    bazaButton.addEventListener('click',(e) => {
+        chrome.browserAction.setPopup({popup: "passwordsViewer.html"});
+        window.location.href="passwordsViewer.html"
     })
 })();
