@@ -15,11 +15,19 @@
 9. Wymyślenie tymczasowej formy w jakiej będziemy przechowywać hasła na firebase
 10. Dodanie funkcji zapisywania hasła na bazie
 11. Zmiana UI na oparte o checkboxy
+12. Dodanie funkcjonalności logowania
+13. Dodanie funkcji wyświetlania haseł
 
 
 12. Szyfrowanie haseł.
 
 13. Technologia związana z zabezpieczeniem haseł.
+
+14. Stworzenie lokalnej bazy danych dla każdego użytkownika
+
+15. Poprawienie struktury bazy danych. Dane do logowania dla każdego użytkownika
+
+16. Automatyczne wykrywanie kiedy jest możliwość wpisania hasła i zaproponowanie
 
 
 
