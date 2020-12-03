@@ -79,6 +79,29 @@ var firebaseConfig = {
                     });
 
         }
+        if(msg.command=='getCollection'){
+            var db = firebase.firestore();
+            var collectionName = msg.data.collectionName;
+
+            var ilosc = 0;
+            var hasla = new Array();
+
+            db.collection(collectionName).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(`${doc.id} => ${doc.data()}`);
+                    hasla.push(doc.data())
+                    ilosc++;
+                });
+                response({type:'collection', status:'success', message:{iloscWierszy:ilosc, tabHasel: hasla }})
+            })
+            .catch((error) =>{
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response({type:'collection',status:"error",message:error});
+            })
+
+
+        }
 
         return true;
     });
