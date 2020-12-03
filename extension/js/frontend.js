@@ -1,4 +1,3 @@
-(function() {
 
   // Your web app's Firebase configuration
   var firebaseConfig = {
@@ -78,7 +77,7 @@
         e.preventDefault();
     })
 
-
+    
     function copyToClipboard(text) {
         const input = document.createElement('input');
         input.style.position = 'fixed';
@@ -102,4 +101,69 @@
         chrome.browserAction.setPopup({popup: "passwordsViewer.html"});
         window.location.href="passwordsViewer.html"
     })
-})();
+    const loginButton = document.querySelector('#loginButton')
+
+    loginButton.addEventListener('click',(e) =>{
+            document.getElementById("loginPanel").style.width = "200px";
+
+        
+    })
+    const closeButton = document.querySelector('#closeButton')
+
+    closeButton.addEventListener('click',(e) =>{
+       
+            document.getElementById("loginPanel").style.width = "0";
+
+        
+    })
+
+    const submitButton = document.querySelector('#submitButton')
+    const registerButton = document.querySelector('#registerButton')
+
+    submitButton.addEventListener('click',(e) =>{
+       
+
+       var Useremail =  document.getElementById("usremail").value;
+       var Userpassword =  document.getElementById("usrpassword").value;
+
+       chrome.runtime.sendMessage({command:"loginUser",data:{e: Useremail,p: Userpassword}},(response)=>{
+          
+          if(response.status=='succes')
+          {
+              alert(response.message.uid);
+
+              // event po poprawnym zalogowaniu 
+          }
+          else{
+                alert("Niepoprawny email lub hasło")
+          }
+      });
+
+
+    })
+
+    registerButton.addEventListener('click',(e) =>{
+       
+
+        var Useremail =  document.getElementById("usremail").value;
+        var Userpassword =  document.getElementById("usrpassword").value;
+ 
+        chrome.runtime.sendMessage({command:"registerUser",data:{e: Useremail,p: Userpassword}},(response)=>{
+           
+           if(response.status=='succes')
+           {
+               alert("Rejestracja powiodła sie");
+               
+           }
+           else{
+                 alert("Rejestracja nie powiodła sie")
+           }
+       });
+ 
+ 
+     })
+   
+      
+
+
+
