@@ -1,4 +1,50 @@
 
+window.onload = function() {
+
+    function recoverHTML(){
+        var lengthPass = document.getElementById("passlength")
+        var lowers = document.getElementById("Lowers")
+        var capitals = document.getElementById("Capitals")
+        var digits = document.getElementById("Digits")
+        var specials = document.getElementById("Specials")
+        var viewerPanel = document.getElementById("viewerPanel")
+        var login = document.getElementById("loginPanel")
+        
+
+        if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
+        if(localStorage.lowers   == "true") { lowers.checked    = true } else{ lowers.checked = false }
+        if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
+        if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
+        if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
+        if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
+        if(localStorage.login    == "true") {login.style.width = "200px"}
+        
+    }
+
+    recoverHTML();
+
+    var lengthPass = document.getElementById("passlength")
+    lengthPass.addEventListener('input',(e)=>{
+        localStorage.setItem("lengthPass",lengthPass.value)
+    })
+    var lowers = document.getElementById("Lowers")
+    lowers.addEventListener('change', (e)=>{
+        localStorage.setItem("lowers",lowers.checked)
+    })
+    var capitals = document.getElementById("Capitals")
+    capitals.addEventListener('change', (e)=>{
+        localStorage.setItem("capitals",capitals.checked)
+    })
+    var digits = document.getElementById("Digits")
+    digits.addEventListener('change', (e)=>{
+        localStorage.setItem("digits",digits.checked)
+    })
+    var specials = document.getElementById("Specials")
+    specials.addEventListener('change', (e)=>{
+        localStorage.setItem("specials",specials.checked)
+    })
+    
+
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
@@ -69,8 +115,6 @@
                 console.error("Error adding document: ", error);
             });
 
-
-
             }
         }
 
@@ -96,33 +140,23 @@
         }
     })
 
-    const bazaButton = document.querySelector('#baza')
-    bazaButton.addEventListener('click',(e) => {
-        chrome.browserAction.setPopup({popup: "passwordsViewer.html"});
-        window.location.href="passwordsViewer.html"
-    })
+
     const loginButton = document.querySelector('#loginButton')
-
     loginButton.addEventListener('click',(e) =>{
-            document.getElementById("loginPanel").style.width = "200px";
-
-        
+        localStorage.setItem("login","true")
+        document.getElementById("loginPanel").style.width = "200px";
     })
+
     const closeButton = document.querySelector('#closeButton')
-
     closeButton.addEventListener('click',(e) =>{
-       
-            document.getElementById("loginPanel").style.width = "0";
-
-        
+        localStorage.setItem("login","false")
+        document.getElementById("loginPanel").style.width = "0";
     })
 
     const submitButton = document.querySelector('#submitButton')
     const registerButton = document.querySelector('#registerButton')
 
     submitButton.addEventListener('click',(e) =>{
-       
-
        var Useremail =  document.getElementById("usremail").value;
        var Userpassword =  document.getElementById("usrpassword").value;
 
@@ -139,12 +173,9 @@
           }
       });
 
-
     })
 
     registerButton.addEventListener('click',(e) =>{
-       
-
         var Useremail =  document.getElementById("usremail").value;
         var Userpassword =  document.getElementById("usrpassword").value;
  
@@ -160,10 +191,75 @@
            }
        });
  
- 
      })
-   
+
+     const bazaButton = document.querySelector('#baza')
+     bazaButton.addEventListener('click',(e) => {
+        localStorage.setItem("viewer","true")
+        document.getElementById("viewerPanel").style.width = "200px";
+     })
+
+     const backToGenerator = document.querySelector('#backToGenerator')
+     backToGenerator.addEventListener('click',(e) =>{
+        localStorage.setItem("viewer","false")
+        document.getElementById("viewerPanel").style.width = "0px";
+     })
+
+     function tableCreate() {
+        var ilosc = 0
+        var hasla = new Array()
+
+        chrome.runtime.sendMessage({command:'getCollection', data:{collectionName:'hasla'}}, (response) => {
+            if(response.status=='success')
+            {
+                ilosc = response.message.iloscWierszy;
+                hasla = response.message.tabHasel;
+
+                var body = document.getElementById('viewerPanel');
+                var tbl = document.createElement('table');
+                tbl.style.width = '100%';
+                tbl.setAttribute('border', '1');
+                var tbdy = document.createElement('tbody');
+                for (var i = 0; i < 1 + ilosc; i++) {
+                  var tr = document.createElement('tr');
+                  for (var j = 0; j < 3; j++) {
+                    {
+                        if(i==0){ //wiersz z labelami
+                            var td = document.createElement('td');
+                            td.appendChild(document.createTextNode('\u0020'))
+                            if(j==0) {td.textContent = "Lp."}
+                            if(j==1) {td.textContent = "login"}
+                            if(j==2) {td.textContent = "haslo"}
+                            tr.appendChild(td)
       
+                        } else {
+                            var td = document.createElement('td');
+                            td.appendChild(document.createTextNode('\u0020'))
+                            if(j==0) {td.textContent = i}
+                            if(j==1) {td.textContent = hasla[i-1].login}
+                            if(j==2) {td.textContent = hasla[i-1].haslo}
+                            tr.appendChild(td)
+                        }
+                        
+                    }
+                  }
+                  tbdy.appendChild(tr);
+                }
+                tbl.appendChild(tbdy);
+                body.appendChild(tbl)
+                
+            }
+            else{
+                  alert("Problem przy wyciągnięciu danych z bazy")
+            }
+        })
+    
+
+
+        }
+        tableCreate() 
+
+}
 
 
 
