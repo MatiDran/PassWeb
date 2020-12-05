@@ -20,13 +20,11 @@ _________________________________________________
 _________________________________________________
 
 14. Szyfrowanie haseł.
-15. Stworzenie lokalnej bazy danych dla każdego użytkownika
 16. Przeniesienie zapisu/odczytu danych do background'u
 17. Poprawienie struktury bazy danych. Dane do logowania dla każdego użytkownika
 18. Automatyczne wykrywanie kiedy jest możliwość wpisania hasła
 19. Trzymanie stanu aplikacji
 20. Automatycznie pobieraj nazwe strony/karty
-21. Toogle offline/online
 _________________________________________________
 
 
