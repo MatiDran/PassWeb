@@ -1,5 +1,50 @@
 
 window.onload = function() {
+
+    function recoverHTML(){
+        var lengthPass = document.getElementById("passlength")
+        var lowers = document.getElementById("Lowers")
+        var capitals = document.getElementById("Capitals")
+        var digits = document.getElementById("Digits")
+        var specials = document.getElementById("Specials")
+        var viewerPanel = document.getElementById("viewerPanel")
+        var login = document.getElementById("loginPanel")
+        
+
+        if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
+        if(localStorage.lowers   == "true") { lowers.checked    = true } else{ lowers.checked = false }
+        if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
+        if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
+        if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
+        if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
+        if(localStorage.login    == "true") {login.style.width = "200px"}
+        
+    }
+
+    recoverHTML();
+
+    var lengthPass = document.getElementById("passlength")
+    lengthPass.addEventListener('input',(e)=>{
+        localStorage.setItem("lengthPass",lengthPass.value)
+    })
+    var lowers = document.getElementById("Lowers")
+    lowers.addEventListener('change', (e)=>{
+        localStorage.setItem("lowers",lowers.checked)
+    })
+    var capitals = document.getElementById("Capitals")
+    capitals.addEventListener('change', (e)=>{
+        localStorage.setItem("capitals",capitals.checked)
+    })
+    var digits = document.getElementById("Digits")
+    digits.addEventListener('change', (e)=>{
+        localStorage.setItem("digits",digits.checked)
+    })
+    var specials = document.getElementById("Specials")
+    specials.addEventListener('change', (e)=>{
+        localStorage.setItem("specials",specials.checked)
+    })
+    
+
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
@@ -70,8 +115,6 @@ window.onload = function() {
                 console.error("Error adding document: ", error);
             });
 
-
-
             }
         }
 
@@ -97,33 +140,23 @@ window.onload = function() {
         }
     })
 
-    const bazaButton = document.querySelector('#baza')
-    bazaButton.addEventListener('click',(e) => {
-        document.getElementById("viewerPanel").style.width = "200px";
-    })
-
 
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click',(e) =>{
-            document.getElementById("loginPanel").style.width = "200px";
-
-
+        localStorage.setItem("login","true")
+        document.getElementById("loginPanel").style.width = "200px";
     })
+
     const closeButton = document.querySelector('#closeButton')
-
     closeButton.addEventListener('click',(e) =>{
-       
-            document.getElementById("loginPanel").style.width = "0";
-
-    
+        localStorage.setItem("login","false")
+        document.getElementById("loginPanel").style.width = "0";
     })
 
     const submitButton = document.querySelector('#submitButton')
     const registerButton = document.querySelector('#registerButton')
 
     submitButton.addEventListener('click',(e) =>{
-       
-
        var Useremail =  document.getElementById("usremail").value;
        var Userpassword =  document.getElementById("usrpassword").value;
 
@@ -140,12 +173,9 @@ window.onload = function() {
           }
       });
 
-
     })
 
     registerButton.addEventListener('click',(e) =>{
-       
-
         var Useremail =  document.getElementById("usremail").value;
         var Userpassword =  document.getElementById("usrpassword").value;
  
@@ -161,11 +191,17 @@ window.onload = function() {
            }
        });
  
- 
+     })
+
+     const bazaButton = document.querySelector('#baza')
+     bazaButton.addEventListener('click',(e) => {
+        localStorage.setItem("viewer","true")
+        document.getElementById("viewerPanel").style.width = "200px";
      })
 
      const backToGenerator = document.querySelector('#backToGenerator')
      backToGenerator.addEventListener('click',(e) =>{
+        localStorage.setItem("viewer","false")
         document.getElementById("viewerPanel").style.width = "0px";
      })
 
