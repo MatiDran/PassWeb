@@ -189,6 +189,7 @@ else{
             //localStorage.setItem("UserId",response.user)
             localStorage.setItem("login","false")
             localStorage.setItem("userId",response.message.uid)
+            localStorage.setItem("haslo",Userpassword)
           }
           else{
           // event po niepoprawnym zalogowaniu 
@@ -203,6 +204,7 @@ else{
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
+            localStorage.setItem("haslo","0")
         });
     
     })
