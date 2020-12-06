@@ -236,6 +236,22 @@ else{
         document.getElementById("viewerPanel").style.width = "0px";
      })
 
+     zapiszSideButton.addEventListener('click',(e)=>{
+        //localStorage.setItem("login","true")
+        document.getElementById("savePanel").style.width = "200px";
+        var hasloZapis = document.getElementById("hasloZapis");
+        hasloZapis.value = outputPassword.textContent
+     })
+
+     closeButtonSave.addEventListener('click',(e)=>{
+        //localStorage.setItem("login","true")
+        document.getElementById("savePanel").style.width = "0px";
+     })
+
+     zapiszButton.addEventListener('click',(e)=>{
+        //@MATEUSZ tutaj wywołujesz
+     })
+
      function tableCreate() {
         var ilosc = 0
         var hasla = new Array()

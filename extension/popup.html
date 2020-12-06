@@ -64,10 +64,29 @@
         </div>
           <div class="notloged" style="display: block;">
             <button class="openbtn" id="loginButton">Zaloguj się</button>
+            
           </div>
           <div class="loged" style="display: none;">
             <button class="openbtn" id="logoutButton">Wyloguj</button>
+            <button class="openbtn" id="zapiszSideButton">Zapisz</button>
           </div>
+
+
+      <div id="savePanel" class="sidepanel">
+        <button class="closebtn" id="closeButtonSave">&times;</button>  
+        <div>
+          <input type="text" placeholder="Strona" class="logowanietext" required="" id="stronaZapis" />
+        </div>
+        <div>
+          <input  type="text" placeholder="Login" class="logowanietext" required="" id="loginZapis" />
+        </div>
+        <div>
+          <input  type="text" placeholder="Hasło" class="logowanietext" required="" id="hasloZapis" />
+        </div>
+        <div>  
+          <input type="submit" class="submbutt" id="zapiszButton" value="Zapisz" />
+        </div>  
+      </div>
 
            
 
