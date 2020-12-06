@@ -18,6 +18,12 @@ window.onload = function() {
         if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
         if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
         if(localStorage.login    == "true") {login.style.width = "200px"}
+
+        console.log(localStorage.userId)
+        if(localStorage.userId != "0"){//jeśli zalogowany
+            document.querySelector('.loged').style.display='block';
+            document.querySelector('.notloged').style.display='none';
+        }
         
     }
 
@@ -180,6 +186,9 @@ else{
             document.querySelector('.notloged').style.display='none';
             document.getElementById("loginPanel").style.width = "0";
               // event po poprawnym zalogowaniu 
+            //localStorage.setItem("UserId",response.user)
+            localStorage.setItem("login","false")
+            localStorage.setItem("userId",response.message.uid)
           }
           else{
           // event po niepoprawnym zalogowaniu 
@@ -193,6 +202,7 @@ else{
         document.querySelector('.notloged').style.display='block';
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
+            localStorage.setItem("userId","0")
         });
     
     })
