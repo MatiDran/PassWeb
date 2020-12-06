@@ -71,22 +71,21 @@ var firebaseConfig = {
 
             var UID = msg.data.id
 
-            
-
             var db = firebase.firestore();
             db.collection(UID).doc(saveSite).collection('Dane').doc().set({
                 login: saveLogin,
                 haslo: savePassword,
                 strona: saveSite 
                 
+            }).then(() => {
+                response({type:"save",status:"succes"})
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response({type:"save",status:"error",message:error});
+
             });
-    
-                chrome.tabs.getSelected(null, function(tab) {
-                    var currentURL = document.createElement('a')
-                    currentURL.href=tab.url;
-                    alert(currentURL.hostname);
-                });
-            
             
         }
 

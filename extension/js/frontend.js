@@ -212,6 +212,7 @@ else{
         document.getElementById("viewerPanel").style.width = "0px";
      })
 
+
      function getSite(okno) {
      chrome.tabs.getSelected(null, function(tab) {
         var currentURL = document.createElement('a')
@@ -224,15 +225,13 @@ else{
      zapiszSideButton.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
 
-       
-
         document.getElementById("savePanel").style.width = "200px";
         var hasloZapis = document.getElementById("hasloZapis");
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
 
         hasloZapis.value = outputPassword.textContent
-        getSite(stronaZapis)
+        getSite(stronaZapis);
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
@@ -247,18 +246,21 @@ else{
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
         
-        
-
-
         chrome.runtime.sendMessage({command:"savePassword",data:{id:localStorage.userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
           
             if(response.status=='succes')
             {
-           
-                // event po poprawnym zalogowaniu 
+                hasloZapis.value=""
+                stronaZapis.value=""
+                loginZapis.value=""
+                document.getElementById("savePanel").style.width = "0px";
+                
+                alert('Hasło zostało zapisane do bazy')
+                // event po poprawnym zapisaniu 
              
             }
             else{
+                alert('Niestety nie udało się zapisać hasła')
             // event po niepoprawnym zalogowaniu 
             
             }
