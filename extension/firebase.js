@@ -71,7 +71,7 @@ var firebaseConfig = {
 
             var UID = msg.data.id
 
-
+            
 
             var db = firebase.firestore();
             db.collection(UID).doc(saveSite).collection('Dane').doc().set({
@@ -80,7 +80,14 @@ var firebaseConfig = {
                 strona: saveSite 
                 
             });
-        
+    
+                chrome.tabs.getSelected(null, function(tab) {
+                    var currentURL = document.createElement('a')
+                    currentURL.href=tab.url;
+                    alert(currentURL.hostname);
+                });
+            
+            
         }
 
         if(msg.command=='registerUser')

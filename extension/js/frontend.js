@@ -212,15 +212,27 @@ else{
         document.getElementById("viewerPanel").style.width = "0px";
      })
 
+     function getSite(okno) {
+     chrome.tabs.getSelected(null, function(tab) {
+        var currentURL = document.createElement('a')
+        currentURL.href=tab.url;
+        okno.value = currentURL.hostname
+    });
+    
+    }
+
      zapiszSideButton.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
+
+       
+
         document.getElementById("savePanel").style.width = "200px";
         var hasloZapis = document.getElementById("hasloZapis");
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
 
         hasloZapis.value = outputPassword.textContent
-
+        getSite(stronaZapis)
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
