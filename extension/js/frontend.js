@@ -235,12 +235,10 @@ else{
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
         
-        hasloZapis.value = "haslo";
-        stronaZapis.value = "strona";
-        loginZapis.value = "login";
+        
 
 
-        chrome.runtime.sendMessage({command:"savePassword",data:{id:userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
+        chrome.runtime.sendMessage({command:"savePassword",data:{id:localStorage.userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
           
             if(response.status=='succes')
             {

@@ -64,7 +64,6 @@ var firebaseConfig = {
         if(msg.command=='savePassword')
         {
 
-            console.log(msg.data);
 
             var saveLogin = msg.data.l
             var savePassword = msg.data.p
@@ -75,10 +74,11 @@ var firebaseConfig = {
 
 
             var db = firebase.firestore();
-            db.collection(UID).add({
+            db.collection(UID).doc(saveSite).collection('Dane').doc().set({
                 login: saveLogin,
                 haslo: savePassword,
                 strona: saveSite 
+                
             });
         
         }
