@@ -26,45 +26,73 @@
     z-index: 1; 
     top: 0;
     left: 0;
-    background-color: #6b65a0; 
+    background-color: #7c796d; 
     overflow-x: hidden; 
     padding-top: 30px; 
     transition: 0.5s; 
 }
   .sidepanel a {
-    padding: 8px 8px 8px 32px;
+    padding: 4px 4px 4px 16px;
     text-decoration: none;
-    font-size: 15px;
-    color: #272435;
+    font-size: 11px;
+    color: #78a1b9;
     display: block;
     transition: 0.3s;
   }
   
- 
-  
+  .logowanietext
+ {
+  background-color: #b3af94;
+  margin: 6px;
+  border: transparent 1px;
+
+
+ } 
   .sidepanel .closebtn {
     position: absolute;
     top: 0;
-    right: 25px;
     font-size: 36px;
-    margin-left: 30px;
+    right: 20px;
+    background: transparent;
+    border:transparent;
   }
-  .sidepanel .submitbtn {
+   .submbutt {
     position: center;
-    bottom: 20px;
-    font-size: 36px;
-    margin-left: 25px;
-  }
-  
-  .openbtn {
-    font-size: 20px;
+    display: block;
+    width: 100px;
+    height: 26px;
+    border-radius: 18px;
+    background-color: #4e4c40;
+    border: solid 1px transparent;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
     cursor: pointer;
-    background-color: rgb(37, 61, 83);
+    transition: all .1s ease-in-out;
+   
+    
+  }
+  .submbutt:hover
+  {
+    background-color: transparent;
+    border-color: #fff;
+    transition: all .1s ease-in-out;
+
+  }
+
+  .openbtn {
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgb(73, 73, 71);
     color: white;
-    padding: 10px 15px;
+    padding: 10px 10px;
     border: none;
   }
   
   .openbtn:hover {
     background-color: rgb(27, 30, 54);
   }
+
+
+ 
+

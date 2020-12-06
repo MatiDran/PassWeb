@@ -153,6 +153,18 @@ window.onload = function() {
         document.getElementById("loginPanel").style.width = "0";
     })
 
+
+    chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
+console.log(response);
+if(response.status=='succes'){
+    document.querySelector('.loged').style.display='block';
+}
+else{
+    document.querySelector('.notloged').style.display='block';
+
+}
+
+    })
     const submitButton = document.querySelector('#submitButton')
     const registerButton = document.querySelector('#registerButton')
 
@@ -164,17 +176,26 @@ window.onload = function() {
           
           if(response.status=='succes')
           {
-              alert(response.message.uid);
-
+            document.querySelector('.loged').style.display='block';
+            document.querySelector('.notloged').style.display='none';
+            document.getElementById("loginPanel").style.width = "0";
               // event po poprawnym zalogowaniu 
           }
           else{
-                alert("Niepoprawny email lub hasło")
+          // event po niepoprawnym zalogowaniu 
+          
           }
       });
 
     })
-
+    logoutButton.addEventListener('click',(e) =>{
+        document.querySelector('.loged').style.display='none';
+        document.querySelector('.notloged').style.display='block';
+        chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
+            console.log(response);
+        });
+    
+    })
     registerButton.addEventListener('click',(e) =>{
         var Useremail =  document.getElementById("usremail").value;
         var Userpassword =  document.getElementById("usrpassword").value;

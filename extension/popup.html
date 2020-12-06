@@ -50,17 +50,24 @@
 
         <div id="loginPanel" class="sidepanel">
             <button class="closebtn" id="closeButton">&times;</button>
-            <a href="#">Email</a>
-            <input type="email" name="usremail" id="usremail" min="4">
-            <a href="#">Hasło</a>
-            <input type="password" name="usrpassword" id="usrpassword" min="5" >
-            <button class="submitbtn" id="submitButton">Zaloguj</button>
-            <button class="submitbtn" id="registerButton">Zarejestruj</button>
-
+           
+            <h1>Logowanie</h1>
+      <div>
+        <input type="text" placeholder="Email" class="logowanietext" required="" id="usremail" />
+      </div>
+      <div>
+        <input  type="password" placeholder="Hasło" class="logowanietext" required="" id="usrpassword" />
+      </div>    
+        <input type="submit" class="submbutt" id="submitButton" value="Zaloguj" />
+        <a href="#">Lost your password?</a>
+        <a href="#"  id="registerButton">Register</a>
         </div>
-          
-        <button class="openbtn" id="loginButton">&#9776; Zaloguj się</button>
-
+          <div class="notloged" style="display: block;">
+            <button class="openbtn" id="loginButton">Zaloguj się</button>
+          </div>
+          <div class="loged" style="display: none;">
+            <button class="openbtn" id="logoutButton">Wyloguj</button>
+          </div>
 
            
 
