@@ -50,20 +50,6 @@ window.onload = function() {
         localStorage.setItem("specials",specials.checked)
     })
     
-
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
-    authDomain: "keypass-2b5a9.firebaseapp.com",
-    databaseURL: "https://keypass-2b5a9.firebaseio.com",
-    projectId: "keypass-2b5a9",
-    storageBucket: "keypass-2b5a9.appspot.com",
-    messagingSenderId: "608568818489",
-    appId: "1:608568818489:web:0e07b7699bea95a884c6e8"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
     
     const formInstance = document.querySelector('#generator');
     const outputPassword = document.querySelector('#password');
@@ -108,18 +94,6 @@ window.onload = function() {
                
             var passwd = myFunction(passLength,lowers,capitals,digits,specials);
             outputPassword.textContent = passwd;
-        
-            var db = firebase.firestore();
-            db.collection("hasla").add({
-                login: "brak",
-                haslo: passwd
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
 
             }
         }
@@ -242,7 +216,11 @@ else{
         //localStorage.setItem("login","true")
         document.getElementById("savePanel").style.width = "200px";
         var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
+
         hasloZapis.value = outputPassword.textContent
+
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
@@ -252,6 +230,31 @@ else{
 
      zapiszButton.addEventListener('click',(e)=>{
         //@MATEUSZ tutaj wywołujesz
+
+        var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
+        
+        hasloZapis.value = "haslo";
+        stronaZapis.value = "strona";
+        loginZapis.value = "login";
+
+
+        chrome.runtime.sendMessage({command:"savePassword",data:{id:userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
+          
+            if(response.status=='succes')
+            {
+           
+                // event po poprawnym zalogowaniu 
+             
+            }
+            else{
+            // event po niepoprawnym zalogowaniu 
+            
+            }
+        });
+
+       
      })
 
      function tableCreate() {

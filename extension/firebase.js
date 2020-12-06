@@ -61,6 +61,28 @@ var firebaseConfig = {
                 }
             });
         }
+        if(msg.command=='savePassword')
+        {
+
+            console.log(msg.data);
+
+            var saveLogin = msg.data.l
+            var savePassword = msg.data.p
+            var saveSite = msg.data.s
+
+            var UID = msg.data.id
+
+
+
+            var db = firebase.firestore();
+            db.collection(UID).add({
+                login: saveLogin,
+                haslo: savePassword,
+                strona: saveSite 
+            });
+        
+        }
+
         if(msg.command=='registerUser')
         {   var email=msg.data.e;
             var password=msg.data.p;
