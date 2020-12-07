@@ -189,6 +189,10 @@ window.onload = function() {
             console.log(response);
             localStorage.setItem("userId","0")
             localStorage.setItem("haslo","0")
+            var tablePass = document.getElementById("tablePass")
+            if(document.contains(tablePass)){
+                tablePass.remove()
+            }
         });
     
     })
