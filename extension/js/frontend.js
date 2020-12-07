@@ -8,7 +8,8 @@ window.onload = function() {
         var digits = document.getElementById("Digits")
         var specials = document.getElementById("Specials")
         var viewerPanel = document.getElementById("viewerPanel")
-        var login = document.getElementById("loginPanel")
+        var loginPanel = document.getElementById("loginPanel")
+        var savePanel = document.getElementById("savePanel")
         
 
         if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
@@ -16,13 +17,20 @@ window.onload = function() {
         if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
         if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
         if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
-        if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
-        if(localStorage.login    == "true") {login.style.width = "200px"}
+        
+        if(localStorage.saver    == "true") {savePanel.style.width = "200px"}
+        if(localStorage.login    == "true") {loginPanel.style.width = "200px"}
 
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
             document.querySelector('.loged').style.display='block';
+            document.getElementById('baza').style.display="block"
             document.querySelector('.notloged').style.display='none';
+            if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
+        } else {
+            document.querySelector('.loged').style.display='none';
+            document.getElementById('baza').style.display="none"
+            document.querySelector('.notloged').style.display='block';
         }
         
     }
@@ -135,14 +143,14 @@ window.onload = function() {
 
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
-console.log(response);
-if(response.status=='succes'){
-    document.querySelector('.loged').style.display='block';
-}
-else{
-    document.querySelector('.notloged').style.display='block';
+    console.log(response);
+    if(response.status=='succes'){
+        document.querySelector('.loged').style.display='block';
+    }
+    else{
+        document.querySelector('.notloged').style.display='block';
 
-}
+    }
 
     })
     const submitButton = document.querySelector('#submitButton')
@@ -158,6 +166,7 @@ else{
           {
             document.querySelector('.loged').style.display='block';
             document.querySelector('.notloged').style.display='none';
+            document.getElementById('baza').style.display="block"
             document.getElementById("loginPanel").style.width = "0";
               // event po poprawnym zalogowaniu 
             //localStorage.setItem("UserId",response.user)
@@ -175,6 +184,7 @@ else{
     logoutButton.addEventListener('click',(e) =>{
         document.querySelector('.loged').style.display='none';
         document.querySelector('.notloged').style.display='block';
+        document.getElementById('baza').style.display="none"
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
@@ -202,6 +212,10 @@ else{
 
      const bazaButton = document.querySelector('#baza')
      bazaButton.addEventListener('click',(e) => {
+        var tablePass = document.getElementById("tablePass")
+        if(!document.contains(tablePass)){
+            tableCreate();
+        }
         localStorage.setItem("viewer","true")
         document.getElementById("viewerPanel").style.width = "200px";
      })
@@ -224,6 +238,7 @@ else{
 
      zapiszSideButton.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
+        localStorage.setItem("saver","true")
 
         document.getElementById("savePanel").style.width = "200px";
         var hasloZapis = document.getElementById("hasloZapis");
@@ -236,6 +251,7 @@ else{
 
      closeButtonSave.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
+        localStorage.setItem("saver","false")
         document.getElementById("savePanel").style.width = "0px";
      })
 
@@ -256,6 +272,8 @@ else{
                 document.getElementById("savePanel").style.width = "0px";
                 
                 alert('Hasło zostało zapisane do bazy')
+                localStorage.setItem("saver","false")
+                tableCreate();
                 // event po poprawnym zapisaniu 
              
             }
@@ -272,8 +290,12 @@ else{
      function tableCreate() {
         var ilosc = 0
         var hasla = new Array()
+        var tablePass = document.getElementById("tablePass")
+        if(document.contains(tablePass)){
+            tablePass.remove()
+        }
 
-        chrome.runtime.sendMessage({command:'getCollection', data:{collectionName:'hasla'}}, (response) => {
+        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId}}, (response) => {
             if(response.status=='success')
             {
                 ilosc = response.message.iloscWierszy;
@@ -283,10 +305,11 @@ else{
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
                 tbl.setAttribute('border', '1');
+                tbl.id = "tablePass"
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
-                  for (var j = 0; j < 3; j++) {
+                  for (var j = 0; j < 4; j++) {
                     {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
@@ -294,6 +317,7 @@ else{
                             if(j==0) {td.textContent = "Lp."}
                             if(j==1) {td.textContent = "login"}
                             if(j==2) {td.textContent = "haslo"}
+                            if(j==3) {td.textContent = "strona"}
                             tr.appendChild(td)
       
                         } else {
@@ -302,6 +326,7 @@ else{
                             if(j==0) {td.textContent = i}
                             if(j==1) {td.textContent = hasla[i-1].login}
                             if(j==2) {td.textContent = hasla[i-1].haslo}
+                            if(j==3) {td.textContent = hasla[i-1].strona}
                             tr.appendChild(td)
                         }
                         
@@ -316,11 +341,10 @@ else{
             else{
                   alert("Problem przy wyciągnięciu danych z bazy")
             }
+            
         })
+    }
     
-
-
-        }
         tableCreate() 
 
 }

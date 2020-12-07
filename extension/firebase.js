@@ -72,7 +72,7 @@ var firebaseConfig = {
             var UID = msg.data.id
 
             var db = firebase.firestore();
-            db.collection(UID).doc(saveSite).collection('Dane').doc().set({
+            db.collection(UID).doc().set({
                 login: saveLogin,
                 haslo: savePassword,
                 strona: saveSite 
@@ -108,15 +108,16 @@ var firebaseConfig = {
 
         }
         if(msg.command=='getCollection'){
+            
             var db = firebase.firestore();
-            var collectionName = msg.data.collectionName;
+            var userId = msg.data.userId;
 
             var ilosc = 0;
             var hasla = new Array();
 
-            db.collection(collectionName).get().then((querySnapshot) => {
+
+            db.collection(userId).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    console.log(`${doc.id} => ${doc.data()}`);
                     hasla.push(doc.data())
                     ilosc++;
                 });

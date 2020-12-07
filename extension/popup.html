@@ -5,11 +5,7 @@
         <title>Password Generator</title>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
-                   
-
-        
-        
+    <body>           
         <form name="generator" class="generator" id="generator">
         <ul class="outer">
             <li>
@@ -37,13 +33,14 @@
         </form>
         <section class="password" id="password"></section>
         <button id="copyButton">Kopiuj</button>
+        <button id="baza" style="display: none;" >Zapisane hasła</button>
 
 
         <div id="viewerPanel" class="sidepanel">
             <button id="backToGenerator">Generator</button>
             <section class="przerwa" id="przerwa"></section>
         </div>
-        <button id="baza">Zapisane hasła</button>
+        
 
         <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
