@@ -266,8 +266,9 @@ window.onload = function() {
         var hasloZapis = document.getElementById("hasloZapis");
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
+        var haslo = localStorage.haslo
         
-        chrome.runtime.sendMessage({command:"savePassword",data:{id:localStorage.userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
+        chrome.runtime.sendMessage({command:"savePassword",data:{hasloMain: localStorage.haslo ,id:localStorage.userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
           
             if(response.status=='succes')
             {

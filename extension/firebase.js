@@ -27,7 +27,7 @@ var firebaseConfig = {
 
         }  
         if(msg.command=='checkAuth'){
-            var user=firebase.autch().currentUser;
+            var user=firebase.auth().currentUser;
             if(user){
                 response({type:"auth",status:"succes",message:user});
             }
@@ -63,19 +63,21 @@ var firebaseConfig = {
         }
         if(msg.command=='savePassword')
         {
-
-
+            
+            var hasloMain = msg.data.hasloMain
             var saveLogin = msg.data.l
             var savePassword = msg.data.p
             var saveSite = msg.data.s
+
+            var password = String(CryptoJS.AES.encrypt(savePassword, hasloMain))
 
             var UID = msg.data.id
 
             var db = firebase.firestore();
             db.collection(UID).doc().set({
                 login: saveLogin,
-                haslo: savePassword,
-                strona: saveSite 
+                haslo: password,
+                strona: saveSite
                 
             }).then(() => {
                 response({type:"save",status:"succes"})
