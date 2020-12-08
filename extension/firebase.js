@@ -113,6 +113,7 @@ var firebaseConfig = {
             
             var db = firebase.firestore();
             var userId = msg.data.userId;
+            var hasloMain = msg.data.hasloMain;
 
             var ilosc = 0;
             var hasla = new Array();
@@ -120,7 +121,13 @@ var firebaseConfig = {
 
             db.collection(userId).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    hasla.push(doc.data())
+                    
+                    var decodedData = {
+                        login:doc.data().login,
+                        haslo:(CryptoJS.AES.decrypt(doc.data().haslo, hasloMain)).toString(CryptoJS.enc.Utf8),
+                        strona:doc.data().strona
+                    }
+                    hasla.push(decodedData)
                     ilosc++;
                 });
                 response({type:'collection', status:'success', message:{iloscWierszy:ilosc, tabHasel: hasla }})

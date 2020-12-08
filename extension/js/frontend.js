@@ -10,6 +10,9 @@ window.onload = function() {
         var viewerPanel = document.getElementById("viewerPanel")
         var loginPanel = document.getElementById("loginPanel")
         var savePanel = document.getElementById("savePanel")
+        var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
         
 
         if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
@@ -18,7 +21,12 @@ window.onload = function() {
         if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
         if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
         
-        if(localStorage.saver    == "true") {savePanel.style.width = "200px"}
+        if(localStorage.saver    == "true") {
+            hasloZapis.value    = localStorage.hasloZapis
+            stronaZapis.value   = localStorage.stronaZapis
+            loginZapis.value    = localStorage.loginZapis
+            savePanel.style.width = "200px"
+        }
         if(localStorage.login    == "true") {loginPanel.style.width = "200px"}
 
         console.log(localStorage.userId)
@@ -57,7 +65,18 @@ window.onload = function() {
     specials.addEventListener('change', (e)=>{
         localStorage.setItem("specials",specials.checked)
     })
-    
+    var hasloZapis = document.getElementById("hasloZapis");
+    hasloZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("hasloZapis",hasloZapis.value)
+    })
+    var stronaZapis = document.getElementById("stronaZapis");
+    stronaZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("stronaZapis",stronaZapis.value)
+    })
+    var loginZapis = document.getElementById("loginZapis");
+    loginZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("loginZapis",loginZapis.value)
+    })
     
     const formInstance = document.querySelector('#generator');
     const outputPassword = document.querySelector('#password');
@@ -237,6 +256,7 @@ window.onload = function() {
         var currentURL = document.createElement('a')
         currentURL.href=tab.url;
         okno.value = currentURL.hostname
+        localStorage.setItem("stronaZapis",currentURL.hostname)
     });
     
     }
@@ -252,12 +272,16 @@ window.onload = function() {
 
         hasloZapis.value = outputPassword.textContent
         getSite(stronaZapis);
+
+        localStorage.setItem("loginZapis","")
+        localStorage.setItem("hasloZapis", outputPassword.textContent)
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
         localStorage.setItem("saver","false")
         document.getElementById("savePanel").style.width = "0px";
+        //localStorage.setItem("loginZapis", "")
      })
 
      zapiszButton.addEventListener('click',(e)=>{
@@ -301,7 +325,7 @@ window.onload = function() {
             tablePass.remove()
         }
 
-        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId}}, (response) => {
+        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {
             if(response.status=='success')
             {
                 ilosc = response.message.iloscWierszy;
