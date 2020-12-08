@@ -20,7 +20,7 @@
     width: 150px;
 }
 .sidepanel {
-    height: 210px; /* Specify a height */
+    height: 250px; /* Specify a height */
     width: 0; 
     position: fixed; 
     z-index: 1; 
