@@ -31,14 +31,21 @@ window.onload = function() {
 
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
+            
             document.querySelector('.loged').style.display='block';
-            document.getElementById('baza').style.display="block"
+            document.getElementById('baza').style.display="inline-block"
+            document.getElementById('baza').style.marginRight="15px"
             document.querySelector('.notloged').style.display='none';
+            document.getElementById('loginButton').style.display="none"
+            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('zapiszSideButton').style.marginLeft="15px"
             if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
         } else {
             document.querySelector('.loged').style.display='none';
             document.getElementById('baza').style.display="none"
             document.querySelector('.notloged').style.display='block';
+            document.getElementById('zapiszSideButton').style.display="none"
+            document.getElementById('logoutButton').style.display="none"
         }
         
     }
@@ -150,6 +157,7 @@ window.onload = function() {
 
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click',(e) =>{
+        
         localStorage.setItem("login","true")
         document.getElementById("loginPanel").style.width = "200px";
     })
@@ -168,7 +176,6 @@ window.onload = function() {
     }
     else{
         document.querySelector('.notloged').style.display='block';
-
     }
 
     })
@@ -185,8 +192,15 @@ window.onload = function() {
           {
             document.querySelector('.loged').style.display='block';
             document.querySelector('.notloged').style.display='none';
-            document.getElementById('baza').style.display="block"
+            document.getElementById('baza').style.display="inline-block"
             document.getElementById("loginPanel").style.width = "0";
+            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('baza').style.marginRight="15px"
+            document.getElementById('loginButton').style.display="none"
+            document.getElementById('logoutButton').style.display="inline-block"
+
+            document.getElementById('zapiszSideButton').style.marginLeft="15px"
+
               // event po poprawnym zalogowaniu 
             //localStorage.setItem("UserId",response.user)
             localStorage.setItem("login","false")
@@ -205,6 +219,9 @@ window.onload = function() {
         document.querySelector('.loged').style.display='none';
         document.querySelector('.notloged').style.display='block';
         document.getElementById('baza').style.display="none"
+        document.getElementById('zapiszSideButton').style.display="none"
+        document.getElementById('logoutButton').style.display="block"
+        document.getElementById('loginButton').style.display="inline-block"
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
