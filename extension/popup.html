@@ -5,12 +5,28 @@
         <title>Password Generator</title>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>           
+    <body> 
+
+     
+
+      <div class="loged" style="display: none;">
+      <div class="Center">  
+        <button class="openbtn" id="logoutButton" style="margin-right: 10px;">Wyloguj</button>
+      </div>    
+      </div>
+      
+      <div class="notloged" style="display: block;">
+        <div class="Center">
+        <button class="openbtn" id="loginButton">Zaloguj się</button>
+        </div>  
+      </div>
+
         <form name="generator" class="generator" id="generator">
-        <ul class="outer">
+          <div class="row">
+          <div class="left">
             <li>
-                <label for="passlength">Długość hasła</label>
-                <input type="number" name="passlength" id="passlength" min="1" value="5">
+                  <label for="passlength">Długość hasła</label>
+                  <input class="labelNumber" type="number" name="passlength" id="passlength" min="1" value="5" max="30">
             </li>
             <li>
                 <label for="Lowers">Używaj małych liter</label>
@@ -28,14 +44,26 @@
                 <label for="Specials">Używaj znaków specjalnych</label>
                 <input type="checkbox" name="Specials" id="Specials">
             </li>
-        </ul>
-        <button>Generuj hasło</button>
+            </div>
+        
+            <div class="right"><button class="Generujbtn"><input type="image" width="50px" src="resources/go.png"></button></div>
+         </div>
+
         </form>
-        <section class="password" id="password"></section>
-        <button id="copyButton">Kopiuj</button>
-        <button id="baza" style="display: none;" >Zapisane hasła</button>
-
-
+        <div class="row">
+          <div class="Center"></div>
+            <div class="left">
+              <section class="password" id="password"></section>
+            </div>
+            <div class="right">
+              <div class="Center">
+                <button id="copyButton" class="Copybtn"><input type="image" width="30px" src="resources/canvas.png"></button>
+              </div>
+          </div>
+        </div> 
+        
+        
+       
         <div id="viewerPanel" class="sidepanel">
             <button id="backToGenerator">Generator</button>
             <section class="przerwa" id="przerwa"></section>
@@ -48,25 +76,26 @@
         <div id="loginPanel" class="sidepanel">
             <button class="closebtn" id="closeButton">&times;</button>
            
-            <h1>Logowanie</h1>
+            <h1 class="whiteFont">Logowanie</h1>
       <div>
         <input type="text" placeholder="Email" class="logowanietext" required="" id="usremail" />
       </div>
-      <div>
+  
         <input  type="password" placeholder="Hasło" class="logowanietext" required="" id="usrpassword" />
-      </div>    
         <input type="submit" class="submbutt" id="submitButton" value="Zaloguj" />
+  
         <a href="#">Lost your password?</a>
         <a href="#"  id="registerButton">Register</a>
-        </div>
-          <div class="notloged" style="display: block;">
-            <button class="openbtn" id="loginButton">Zaloguj się</button>
-            
-          </div>
-          <div class="loged" style="display: none;">
-            <button class="openbtn" id="logoutButton">Wyloguj</button>
-            <button class="openbtn" id="zapiszSideButton">Zapisz</button>
-          </div>
+        </div> 
+        
+          
+            <div class="Center">
+              <button class="btn-grad" id="baza" style="display: none;" >Moje hasła</button>
+              <div class="loged" style="display: none;">
+              <button class="openbtn" id="zapiszSideButton">Zapisz</button>
+            </div>
+            </div>
+          
 
 
       <div id="savePanel" class="sidepanel">

@@ -1,36 +1,77 @@
+body {
+  background:rgb(46, 46, 46);
+  width: max-content;
+  min-width: 260px;
+  color: white;
+} 
+
+.myinput[type="checkbox"]:after {
+  position: relative;
+  display: block;
+  left: 2px;
+  top: -11px;
+  width: 7px;
+  height: 7px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #B3B3B3 #dcddde #dcddde #B3B3B3;
+  content: "";
+  background-image: linear-gradient(135deg, #B1B6BE 0%, #FFF 100%);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 .generator {
     display: block;
-
+    text-align: center;
 }
+
 .outer {
     list-style-type: none;
     margin:5px 0;
     padding: 0;
+    background:rgb(46, 46, 46);
+    color: #fff;
+    text-align: left;
 }
 
 .password {
     height: 1.5em;
     padding: 5px;
+    min-width: 200px;
     border: solid 1px #ababab;
     margin: 5px 0;
     overflow: auto;
+    background-color:  #000000;
+    color: #fff;
+
+}
+
+.labelNumber{
+color: #fff;
+background-color: #000000;
+text-align: center;
+width: 40px;
 }
 
 .przerwa {
     width: 150px;
 }
+
 .sidepanel {
-    height: 250px; /* Specify a height */
+    height: 280px; /* Specify a height */
     width: 0; 
+    padding-top: 7px;
     position: fixed; 
     z-index: 1; 
     top: 0;
     left: 0;
-    background-color: #7c796d; 
+    background-color: #000000; 
     overflow-x: hidden; 
-    padding-top: 30px; 
     transition: 0.5s; 
 }
+
   .sidepanel a {
     padding: 4px 4px 4px 16px;
     text-decoration: none;
@@ -42,57 +83,182 @@
   
   .logowanietext
  {
-  background-color: #b3af94;
+  background-color: #000000;
+  color: #fff;
   margin: 6px;
   border: transparent 1px;
-
-
  } 
+
   .sidepanel .closebtn {
-    position: absolute;
-    top: 0;
+    float: right;
+    margin-right:10px;
+    margin-top: -5px;
+    color: red;
     font-size: 36px;
     right: 20px;
     background: transparent;
     border:transparent;
   }
+
+  .Copybtn{
+    text-align: center;
+    background: transparent;
+    border: none;
+    margin-top:10%;
+  }
+  .Copybtn:hover{
+    box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
+  }
+
+
    .submbutt {
     position: center;
     display: block;
     width: 100px;
     height: 26px;
     border-radius: 18px;
-    background-color: #4e4c40;
+    background-color: #000000;
     border: solid 1px transparent;
     color: #fff;
     font-size: 18px;
     font-weight: 300;
+    text-align: center;
     cursor: pointer;
     transition: all .1s ease-in-out;
    
-    
-  }
-  .submbutt:hover
+  }.submbutt:hover
   {
-    background-color: transparent;
-    border-color: #fff;
-    transition: all .1s ease-in-out;
-
+      box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
   }
+
+  
 
   .openbtn {
-    font-size: 16px;
-    cursor: pointer;
-    background-color: rgb(73, 73, 71);
-    color: white;
-    padding: 10px 10px;
+    background-image: linear-gradient(to top, #da7e28 20%, #ffa047  100%);
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    background-size: 200% auto;
+    color: white;            
+    border-radius: 10px;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 14px;
     border: none;
+    outline: none;
+    display: inline-block;
+    position: static;
+  } .openbtn:hover {
+   background-position: bottom center; /* change the direction of the change here */
+  color: white;
+  text-decoration: none;
+  box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
+  }
+
+  .row {
+    width:max-content;
+    display: flex;
+    text-align: center;
   }
   
-  .openbtn:hover {
-    background-color: rgb(27, 30, 54);
-  }
+.whiteFont{
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  font-family: "Lucida Handwriting";
+}
 
 
+
+ .left {
+   width: 85%;
+    left: 0;
+    text-align: left;
  
+ }
+
+ .right {
+    width: 15%;
+    right: 0;
+    text-align: left;
+  
+ }
+
+ .Generujbtn{
+  background: transparent;
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  
+  background-size: 200% auto;
+  color: white;            
+  border-radius: 10px;
+  display: inline-block;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 16px;
+  margin: auto;
+  margin-top: 40%;
+  border: none;
+  outline: none;
+ }.Generujbtn:hover{
+  background-position: bottom center; /* change the direction of the change here */
+  color: white;
+  text-decoration: none;
+  box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
+}
+
+.Leftalign{
+  text-align: left
+}
+
+
+
+
+.btn-grad {
+  background-image: linear-gradient(to top, #da7e28 20%, #ffa047  100%);
+   padding: 5px;
+   text-align: center;
+   text-transform: uppercase;
+   
+   background-size: 200% auto;
+   color: white;            
+   border-radius: 10px;
+   display: inline-block;
+   font-family: 'Comic Sans MS', cursive;
+   font-size: 14px;
+   border: none;
+   outline: none;
+ }
+ .btn-grad:hover {
+   background-position: bottom center; /* change the direction of the change here */
+   color: white;
+   text-decoration: none;
+   box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
+ }
+ 
+
+ .Zapisanebtn{
+  background-image: linear-gradient(to top, #da7e28 20%, #dda821  50%, #e9961b88 100%);
+   padding: 5px 20px;
+   text-align: center;
+   text-transform: uppercase;
+   
+   background-size: 200% auto;
+   color: white;            
+   border-radius: 10px;
+   display: block;
+   font-family: 'Comic Sans MS', cursive;
+   font-size: 16px;
+   margin: auto;
+   border: none;
+   outline: none;
+}.Zapisanebtn:hover{
+  background-position: bottom center; /* change the direction of the change here */
+   color: white;
+   text-decoration: none;
+}
+
+.Center{
+  padding: 5px;
+  text-align: center;
+}
 
