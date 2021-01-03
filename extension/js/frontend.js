@@ -158,6 +158,23 @@ window.onload = function() {
         localStorage.setItem("login","false")
         document.getElementById("loginPanel").style.width = "0";
     })
+// pulling data from form on site to form in our chrome extension (next step : use event listener on submit button)
+    const pullData = document.querySelector('#pullBtn')
+    pullData.addEventListener('click',(e) =>{
+
+        chrome.tabs.query({currentWindow: true,active: true},
+            function(tabs){// pulling data from form 
+         link= tabs[0].url;     
+           
+            })
+
+            // pasting data to form in chrome extension
+        document.getElementById("stronaZapis").value=link;
+       // document.getElementById("loginZapis").value=emvalue;
+       // document.getElementById("hasloZapis").value=paswd;
+        
+
+    })
 
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
