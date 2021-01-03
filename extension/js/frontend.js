@@ -160,19 +160,39 @@ window.onload = function() {
     })
 // pulling data from form on site to form in our chrome extension (next step : use event listener on submit button)
     const pullData = document.querySelector('#pullBtn')
+
+   
+
     pullData.addEventListener('click',(e) =>{
 
         chrome.tabs.query({currentWindow: true,active: true},
             function(tabs){// pulling data from form 
          link= tabs[0].url;     
-           
+
             })
 
             // pasting data to form in chrome extension
         document.getElementById("stronaZapis").value=link;
        // document.getElementById("loginZapis").value=emvalue;
        // document.getElementById("hasloZapis").value=paswd;
-        
+       const scriptToRun = `
+           var values = [];
+           var inputFields = document.getElementsByTagName('input');
+           for (var i = 0; i < inputFields.length; i++) {
+               values.push(inputFields[i].value);
+           }
+           values;`;  //all this code will be run on the tab page
+                      //and the array "values" will be returned.
+   
+       chrome.tabs.executeScript({
+         code: scriptToRun 
+       }, (result) => {
+   
+          console.log( `There are: ${result[0].length} inputs, with these values: <ol><li>${result[0].join("<li>")}`);  
+
+          // crop data from console put it in right place 
+       });
+       
 
     })
 
