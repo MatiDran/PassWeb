@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Password Generator</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body> 
 
@@ -17,7 +18,7 @@
       
       <div class="loged" style="display: none;">
       <div class="Center">  
-        <button class="openbtn" id="logoutButton">Wyloguj</button>
+        <button class="openbtn" id="logoutButton">Wyloguj  <i class="fa fa-power-off"></i></button>
       </div>    
       </div>
       
@@ -25,26 +26,26 @@
         <form name="generator" class="generator" id="generator">
           <div class="row">
           <div class="left">
-            <li>
-                  <label for="passlength">Długość hasła</label>
+            <div class="checkboxes">
+                  <label for="passlength">DŁUGOŚĆ HASŁA</label>
                   <input class="labelNumber" type="number" name="passlength" id="passlength" min="1" value="5" max="30">
-            </li>
-            <li>
-                <label for="Lowers">Używaj małych liter</label>
+           </div>
+            <div class="checkboxes">
+                <label for="Lowers">MAŁE LITERY</label>
                 <input type="checkbox" name="Lowers" id="Lowers">
-            </li>
-            <li>
-                <label for="Capitals">Używaj wielkich liter</label>
-                <input type="checkbox" name="Capitals" id="Capitals">
-            </li>
-            <li>
-                <label for="Digits">Używaj cyfr</label>
+            </div>
+            <div class="checkboxes">
+                <label for="Capitals">WIELKIE LITERY</label>
+                <input type="checkbox" name="Capitals" id="Capitals" style="margin-left: 10px;">
+            </div>
+            <div class="checkboxes">
+                <label for="Digits">CYFRY</label>
                 <input type="checkbox" name="Digits" id="Digits">
-            </li>
-            <li>
-                <label for="Specials">Używaj znaków specjalnych</label>
+            </div>
+            <div class="checkboxes">
+                <label for="Specials">ZNAKI SPECJALNE</label>
                 <input type="checkbox" name="Specials" id="Specials">
-            </li>
+            </div>
             </div>
         
             <div class="right"><button class="Generujbtn"><input type="image" width="50px" src="resources/go.png"></button></div>
@@ -66,7 +67,7 @@
         
        
         <div id="viewerPanel" class="sidepanel">
-            <button id="backToGenerator">Generator</button>
+          <button class="closebtn"  id="backToGenerator">&times;</button>
             <section class="przerwa" id="przerwa"></section>
         </div>
         
@@ -91,9 +92,9 @@
         
           
             <div class="Center">
-              <button class="btn-grad" id="baza" style="display: none;" >Moje hasła</button>
+              <button class="btn-grad" id="baza" style="display: none;" >Moje hasła  <i class="fa fa-th-list"></i></button>
                
-            <button class="openbtn" id="zapiszSideButton">Zapisz</button>
+            <button class="openbtn" id="zapiszSideButton">Zapisz  <i class="fa fa-cloud" ></i></button>
           
             </div>
            
@@ -111,8 +112,9 @@
         <div>
           <input  type="text" placeholder="Hasło" class="logowanietext" required="" id="hasloZapis" />
         </div>
-        <div>  
-          <input type="submit" class="submbutt" id="zapiszButton" value="Zapisz" />
+        <div class="Center">  
+          <button class="submbutt" id="zapiszButton">ZAPISZ  <i class="fa fa-cloud"></i></button> 
+          
         </div>  
       </div>
 

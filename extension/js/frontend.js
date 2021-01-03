@@ -351,20 +351,28 @@ window.onload = function() {
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
-                tbl.setAttribute('border', '1');
+                //tbl.style.border = "solid"
+                //tbl.setAttribute('border',"1px");
+               
                 tbl.id = "tablePass"
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
+                  
                   for (var j = 0; j < 4; j++) {
                     {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = "Lp."}
-                            if(j==1) {td.textContent = "login"}
-                            if(j==2) {td.textContent = "haslo"}
-                            if(j==3) {td.textContent = "strona"}
+                            if(j==0) {td.textContent = ""}
+                            if(j==1) {td.textContent = "LOGIN"}
+                            if(j==2) {td.textContent = "HASŁO"}
+                            if(j==3) {td.textContent = "STRONA"}
+                            td.style.fontFamily = 'Comic Sans MS'
+                            td.style.textAlign = "center"
+                            td.style.fontWeight = "bold"
+                            td.style.backgroundColor = "#da7e28"
+                            
                             tr.appendChild(td)
       
                         } else {
@@ -374,11 +382,16 @@ window.onload = function() {
                             if(j==1) {td.textContent = hasla[i-1].login}
                             if(j==2) {td.textContent = hasla[i-1].haslo}
                             if(j==3) {td.textContent = hasla[i-1].strona}
+                            td.style.borderColor = "orange"
+                            td.style.border = "solid #ffa047 1px "
+
                             tr.appendChild(td)
                         }
                         
                     }
                   }
+
+                  tr.style.backgroundColor = "black";
                   tbdy.appendChild(tr);
                 }
                 tbl.appendChild(tbdy);
