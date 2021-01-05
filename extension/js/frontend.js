@@ -173,13 +173,16 @@ window.onload = function() {
 
             // pasting data to form in chrome extension
         document.getElementById("stronaZapis").value=link;
-       // document.getElementById("loginZapis").value=emvalue;
-       // document.getElementById("hasloZapis").value=paswd;
+      
        const scriptToRun = `
            var values = [];
            var inputFields = document.getElementsByTagName('input');
            for (var i = 0; i < inputFields.length; i++) {
-               values.push(inputFields[i].value);
+               if(inputFields[i].type=='password'||inputFields[i].type=='text'||inputFields[i].type=='email')
+                {
+                     values.push(inputFields[i].value);
+                }
+              
            }
            values;`;  //all this code will be run on the tab page
                       //and the array "values" will be returned.
@@ -187,10 +190,8 @@ window.onload = function() {
        chrome.tabs.executeScript({
          code: scriptToRun 
        }, (result) => {
-   
-          console.log( `There are: ${result[0].length} inputs, with these values: <ol><li>${result[0].join("<li>")}`);  
-
-          // crop data from console put it in right place 
+         document.getElementById("loginZapis").value=result[0][0];
+         document.getElementById("hasloZapis").value=result[0][1];
        });
        
 
