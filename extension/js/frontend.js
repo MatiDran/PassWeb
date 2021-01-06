@@ -158,40 +158,83 @@ window.onload = function() {
         localStorage.setItem("login","false")
         document.getElementById("loginPanel").style.width = "0";
     })
-// pulling data from form on site to form in our chrome extension (next step : use event listener on submit button)
     const pullData = document.querySelector('#pullBtn')
 
+
+// not yet working function adding button next to password line 
+    function AddButtonOnPasswd(){
+        const scriptToRun = `
+          var val =''; 
+          var inputFields = document.getElementsByTagName('input');
+               for (var i = 0; i < inputFields.length; i++) {
+    
+                if(inputFields[i].type=='password')
+                    {
+                        var button = document.createElement("button");
+                        button.innerHTML = "generate";
+                        inputFields[i].appendChild(button);
+    
+                        button.addEventListener ("click", function() {
+                            val="Button working";
+                            // generate passwd and paste it to inputFields[i].val
+
+                          });
+                     }
+                  
+               }
+          
+          
+          `;
+        chrome.tabs.executeScript({
+            code: scriptToRun 
+          }, (result) => {
+              console.log(result);
+            
+          });
+    
+      }
    
 
     pullData.addEventListener('click',(e) =>{
-
+     //  AddButtonOnPasswd(); // just testing delate this 
         chrome.tabs.query({currentWindow: true,active: true},
-            function(tabs){// pulling data from form 
-         link= tabs[0].url;     
-
+            function(tabs){
+             var link= tabs[0].url;     
+            document.getElementById("stronaZapis").value=link;
             })
 
-            // pasting data to form in chrome extension
-        document.getElementById("stronaZapis").value=link;
+       
       
        const scriptToRun = `
            var values = [];
            var inputFields = document.getElementsByTagName('input');
            for (var i = 0; i < inputFields.length; i++) {
-               if(inputFields[i].type=='password'||inputFields[i].type=='text'||inputFields[i].type=='email')
+
+
+            if(inputFields[i].type=='text'||inputFields[i].type=='email')
+                {
+                    values.push(inputFields[i].value);
+                }
+            if(inputFields[i].type=='password')
                 {
                      values.push(inputFields[i].value);
                 }
               
            }
-           values;`;  //all this code will be run on the tab page
-                      //and the array "values" will be returned.
+           values;`;
    
        chrome.tabs.executeScript({
          code: scriptToRun 
        }, (result) => {
          document.getElementById("loginZapis").value=result[0][0];
-         document.getElementById("hasloZapis").value=result[0][1];
+         if(result[0][2]==undefined){
+            document.getElementById("hasloZapis").value=result[0][1];
+
+         }
+         else
+         if(result[0][2]!=undefined){
+            document.getElementById("hasloZapis").value=result[0][2];
+         }
        });
        
 
