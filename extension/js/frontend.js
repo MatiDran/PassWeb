@@ -8,7 +8,12 @@ window.onload = function() {
         var digits = document.getElementById("Digits")
         var specials = document.getElementById("Specials")
         var viewerPanel = document.getElementById("viewerPanel")
-        var login = document.getElementById("loginPanel")
+        var loginPanel = document.getElementById("loginPanel")
+        var savePanel = document.getElementById("savePanel")
+        var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
+        
         
 
         if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
@@ -16,16 +21,30 @@ window.onload = function() {
         if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
         if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
         if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
-        if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
-        if(localStorage.login    == "true") {login.style.width = "200px"}
+        
+        if(localStorage.saver    == "true") {
+            hasloZapis.value    = localStorage.hasloZapis
+            stronaZapis.value   = localStorage.stronaZapis
+            loginZapis.value    = localStorage.loginZapis
+            savePanel.style.width = "200px"
+        }
+        if(localStorage.login    == "true") {loginPanel.style.width = "200px"}
 
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
             document.querySelector('.loged').style.display='block';
+            document.getElementById('baza').style.display="block"
             document.querySelector('.notloged').style.display='none';
+            if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
+        } else {
+            document.querySelector('.loged').style.display='none';
+            document.getElementById('baza').style.display="none"
+            document.querySelector('.notloged').style.display='block';
         }
         
     }
+
+    var haslaMain ={}
 
     recoverHTML();
 
@@ -49,21 +68,18 @@ window.onload = function() {
     specials.addEventListener('change', (e)=>{
         localStorage.setItem("specials",specials.checked)
     })
-    
-
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAiVsuVe2svO5rpE3Pd8cvxbLNzWJl79g8",
-    authDomain: "keypass-2b5a9.firebaseapp.com",
-    databaseURL: "https://keypass-2b5a9.firebaseio.com",
-    projectId: "keypass-2b5a9",
-    storageBucket: "keypass-2b5a9.appspot.com",
-    messagingSenderId: "608568818489",
-    appId: "1:608568818489:web:0e07b7699bea95a884c6e8"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
+    var hasloZapis = document.getElementById("hasloZapis");
+    hasloZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("hasloZapis",hasloZapis.value)
+    })
+    var stronaZapis = document.getElementById("stronaZapis");
+    stronaZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("stronaZapis",stronaZapis.value)
+    })
+    var loginZapis = document.getElementById("loginZapis");
+    loginZapis.addEventListener('change', (e)=>{
+        localStorage.setItem("loginZapis",loginZapis.value)
+    })
     
     const formInstance = document.querySelector('#generator');
     const outputPassword = document.querySelector('#password');
@@ -108,18 +124,6 @@ window.onload = function() {
                
             var passwd = myFunction(passLength,lowers,capitals,digits,specials);
             outputPassword.textContent = passwd;
-        
-            var db = firebase.firestore();
-            db.collection("hasla").add({
-                login: "brak",
-                haslo: passwd
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
 
             }
         }
@@ -146,6 +150,50 @@ window.onload = function() {
         }
     })
 
+    const editZapisButton = document.querySelector('#EditZapiszButton')
+    editZapisButton.addEventListener('click', (e) =>{
+        var id = document.getElementById('editId').value 
+        var docId = haslaMain[id-1].docId
+        var hasloZapis = document.getElementById('editHaslo');
+        var stronaZapis = document.getElementById('editStrona');
+        var loginZapis = document.getElementById('editLogin');
+        chrome.runtime.sendMessage({command:"updatePassword",data:{hasloMain: localStorage.haslo ,id:localStorage.userId,
+                                    s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value, documentId:docId}},(response)=>{
+            if(response.status=='succes')
+            {
+                alert('Hasło zostało zmienione')
+                tableCreate();
+             
+            }
+            else{
+                alert('Niestety nie udało się zmienić hasła')
+            
+            }
+        });
+    })
+
+
+    const editUsunButton = document.querySelector('#EditUsunButton')
+    editUsunButton.addEventListener('click', (e) =>{ 
+        var id = document.getElementById('editId').value 
+        var docId = haslaMain[id-1].docId
+        chrome.runtime.sendMessage({command:"deletePassword",data:{id:localStorage.userId,documentId:docId}},(response)=>{
+            if(response.status=='succes')
+            {
+                alert('Hasło zostało usunięte')
+                tableCreate();
+             
+            }
+            else{
+                alert('Niestety nie udało się usunąć hasła')
+            
+            }
+        });
+
+
+    })
+
+
 
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click',(e) =>{
@@ -153,6 +201,7 @@ window.onload = function() {
         document.getElementById("loginPanel").style.width = "200px";
     })
 
+    
     const closeButton = document.querySelector('#closeButton')
     closeButton.addEventListener('click',(e) =>{
         localStorage.setItem("login","false")
@@ -242,14 +291,14 @@ window.onload = function() {
 
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
-console.log(response);
-if(response.status=='succes'){
-    document.querySelector('.loged').style.display='block';
-}
-else{
-    document.querySelector('.notloged').style.display='block';
+    console.log(response);
+    if(response.status=='succes'){
+        document.querySelector('.loged').style.display='block';
+    }
+    else{
+        document.querySelector('.notloged').style.display='block';
 
-}
+    }
 
     })
     const submitButton = document.querySelector('#submitButton')
@@ -265,12 +314,14 @@ else{
           {
             document.querySelector('.loged').style.display='block';
             document.querySelector('.notloged').style.display='none';
+            document.getElementById('baza').style.display="block"
             document.getElementById("loginPanel").style.width = "0";
               // event po poprawnym zalogowaniu 
             //localStorage.setItem("UserId",response.user)
             localStorage.setItem("login","false")
             localStorage.setItem("userId",response.message.uid)
             localStorage.setItem("haslo",Userpassword)
+            tableCreate();
           }
           else{
           // event po niepoprawnym zalogowaniu 
@@ -282,13 +333,19 @@ else{
     logoutButton.addEventListener('click',(e) =>{
         document.querySelector('.loged').style.display='none';
         document.querySelector('.notloged').style.display='block';
+        document.getElementById('baza').style.display="none"
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
             localStorage.setItem("haslo","0")
+                    var tablePass = document.getElementById("tablePass")
+        if(document.contains(tablePass)){
+            tablePass.remove()
+        }
         });
     
     })
+
     registerButton.addEventListener('click',(e) =>{
         var Useremail =  document.getElementById("usremail").value;
         var Userpassword =  document.getElementById("usrpassword").value;
@@ -309,6 +366,10 @@ else{
 
      const bazaButton = document.querySelector('#baza')
      bazaButton.addEventListener('click',(e) => {
+        var tablePass = document.getElementById("tablePass")
+        if(!document.contains(tablePass)){
+            tableCreate();
+        }
         localStorage.setItem("viewer","true")
         document.getElementById("viewerPanel").style.width = "200px";
      })
@@ -319,40 +380,98 @@ else{
         document.getElementById("viewerPanel").style.width = "0px";
      })
 
+
+     function getSite(okno) {
+     chrome.tabs.getSelected(null, function(tab) {
+        var currentURL = document.createElement('a')
+        currentURL.href=tab.url;
+        okno.value = currentURL.hostname
+        localStorage.setItem("stronaZapis",currentURL.hostname)
+    });
+    
+    }
+
      zapiszSideButton.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
+        localStorage.setItem("saver","true")
+
         document.getElementById("savePanel").style.width = "200px";
         var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
+
         hasloZapis.value = outputPassword.textContent
+        getSite(stronaZapis);
+
+        localStorage.setItem("loginZapis","")
+        localStorage.setItem("hasloZapis", outputPassword.textContent)
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
+        localStorage.setItem("saver","false")
         document.getElementById("savePanel").style.width = "0px";
+        //localStorage.setItem("loginZapis", "")
      })
 
      zapiszButton.addEventListener('click',(e)=>{
         //@MATEUSZ tutaj wywołujesz
+
+        var hasloZapis = document.getElementById("hasloZapis");
+        var stronaZapis = document.getElementById("stronaZapis");
+        var loginZapis = document.getElementById("loginZapis");
+        var haslo = localStorage.haslo
+        
+        chrome.runtime.sendMessage({command:"savePassword",data:{hasloMain: localStorage.haslo ,id:localStorage.userId,s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value}},(response)=>{
+          
+            if(response.status=='succes')
+            {
+                hasloZapis.value=""
+                stronaZapis.value=""
+                loginZapis.value=""
+                document.getElementById("savePanel").style.width = "0px";
+                
+                alert('Hasło zostało zapisane do bazy')
+                localStorage.setItem("saver","false")
+                tableCreate();
+                // event po poprawnym zapisaniu 
+             
+            }
+            else{
+                alert('Niestety nie udało się zapisać hasła')
+            // event po niepoprawnym zalogowaniu 
+            
+            }
+        });
+
+       
      })
+
+     
 
      function tableCreate() {
         var ilosc = 0
         var hasla = new Array()
+        var tablePass = document.getElementById("tablePass")
+        if(document.contains(tablePass)){
+            tablePass.remove()
+        }
 
-        chrome.runtime.sendMessage({command:'getCollection', data:{collectionName:'hasla'}}, (response) => {
+        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {
             if(response.status=='success')
             {
+                haslaMain = response.message.tabHasel;
                 ilosc = response.message.iloscWierszy;
-                hasla = response.message.tabHasel;
 
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
                 tbl.setAttribute('border', '1');
+                tbl.id = "tablePass"
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
-                  for (var j = 0; j < 3; j++) {
+                  for (var j = 0; j < 4; j++) {
                     {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
@@ -360,17 +479,44 @@ else{
                             if(j==0) {td.textContent = "Lp."}
                             if(j==1) {td.textContent = "login"}
                             if(j==2) {td.textContent = "haslo"}
+                            if(j==3) {td.textContent = "strona"}
                             tr.appendChild(td)
       
                         } else {
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
                             if(j==0) {td.textContent = i}
-                            if(j==1) {td.textContent = hasla[i-1].login}
-                            if(j==2) {td.textContent = hasla[i-1].haslo}
+                            if(j==1) {td.textContent = haslaMain[i-1].login}
+                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
+                            if(j==3) {td.textContent = haslaMain[i-1].strona}
+                            
                             tr.appendChild(td)
+                            var createClickHandler = function(row) {
+                                return function() {
+                                    if(row.getElementsByTagName("td")[0] != undefined){
+                                        var id = row.getElementsByTagName("td")[0].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[1] != undefined){
+                                        var login = row.getElementsByTagName("td")[1].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[2] != undefined){
+                                        var haslo = row.getElementsByTagName("td")[2].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[3] != undefined){
+                                        var strona = row.getElementsByTagName("td")[3].innerHTML
+                                    }
+
+                                    document.getElementById('editId').value = id
+                                    document.getElementById('editLogin').value = login
+                                    document.getElementById('editHaslo').value = haslo
+                                    document.getElementById('editStrona').value = strona
+                                }
+                            }
+                            tr.onclick = createClickHandler(tr);
+                            if(i == 1){
+                                tr.click()
+                            }
                         }
-                        
                     }
                   }
                   tbdy.appendChild(tr);
@@ -382,11 +528,10 @@ else{
             else{
                   alert("Problem przy wyciągnięciu danych z bazy")
             }
+            
         })
+    }
     
-
-
-        }
         tableCreate() 
 
 }

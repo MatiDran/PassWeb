@@ -27,7 +27,7 @@ var firebaseConfig = {
 
         }  
         if(msg.command=='checkAuth'){
-            var user=firebase.autch().currentUser;
+            var user=firebase.auth().currentUser;
             if(user){
                 response({type:"auth",status:"succes",message:user});
             }
@@ -61,6 +61,36 @@ var firebaseConfig = {
                 }
             });
         }
+        if(msg.command=='savePassword')
+        {
+            
+            var hasloMain = msg.data.hasloMain
+            var saveLogin = msg.data.l
+            var savePassword = msg.data.p
+            var saveSite = msg.data.s
+
+            var password = String(CryptoJS.AES.encrypt(savePassword, hasloMain))
+
+            var UID = msg.data.id
+
+            var db = firebase.firestore();
+            db.collection(UID).doc().set({
+                login: saveLogin,
+                haslo: password,
+                strona: saveSite
+                
+            }).then(() => {
+                response({type:"save",status:"succes"})
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response({type:"save",status:"error",message:error});
+
+            });
+            
+        }
+
         if(msg.command=='registerUser')
         {   var email=msg.data.e;
             var password=msg.data.p;
@@ -80,16 +110,24 @@ var firebaseConfig = {
 
         }
         if(msg.command=='getCollection'){
+            
             var db = firebase.firestore();
-            var collectionName = msg.data.collectionName;
+            var userId = msg.data.userId;
+            var hasloMain = msg.data.hasloMain;
 
             var ilosc = 0;
             var hasla = new Array();
 
-            db.collection(collectionName).get().then((querySnapshot) => {
+
+            db.collection(userId).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    console.log(`${doc.id} => ${doc.data()}`);
-                    hasla.push(doc.data())
+                    var decodedData = {
+                        login:doc.data().login,
+                        haslo:(CryptoJS.AES.decrypt(doc.data().haslo, hasloMain)).toString(CryptoJS.enc.Utf8),
+                        strona:doc.data().strona,
+                        docId:doc.id
+                    }
+                    hasla.push(decodedData)
                     ilosc++;
                 });
                 response({type:'collection', status:'success', message:{iloscWierszy:ilosc, tabHasel: hasla }})
@@ -99,6 +137,48 @@ var firebaseConfig = {
                 var errorMessage = error.message;
                 response({type:'collection',status:"error",message:error});
             })
+
+
+        }
+        if(msg.command == 'updatePassword'){
+
+            var hasloMain = msg.data.hasloMain
+            var saveLogin = msg.data.l
+            var savePassword = msg.data.p
+            var saveSite = msg.data.s
+            var docId = msg.data.documentId
+            var UID = msg.data.id
+            var password = String(CryptoJS.AES.encrypt(savePassword, hasloMain))
+
+            var db = firebase.firestore();
+            db.collection(UID).doc(docId).update({
+                login: saveLogin,
+                haslo: password,
+                strona: saveSite
+                
+            }).then(() => {
+                response({type:"update",status:"succes"})
+            }).catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response({type:"update",status:"error",message:error});
+            });
+        }
+        if(msg.command == 'deletePassword'){
+
+            var docId = msg.data.documentId
+            var UID = msg.data.id
+
+            var db = firebase.firestore();
+            db.collection(UID).doc(docId).delete(
+
+            ).then(() => {
+                response({type:"delete",status:"succes"})
+            }).catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response({type:"delete",status:"error",message:error});
+            });
 
 
         }
