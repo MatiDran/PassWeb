@@ -14,6 +14,7 @@ window.onload = function() {
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
         
+        
 
         if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
         if(localStorage.lowers   == "true") { lowers.checked    = true } else{ lowers.checked = false }
@@ -42,6 +43,8 @@ window.onload = function() {
         }
         
     }
+
+    var haslaMain ={}
 
     recoverHTML();
 
@@ -147,6 +150,50 @@ window.onload = function() {
         }
     })
 
+    const editZapisButton = document.querySelector('#EditZapiszButton')
+    editZapisButton.addEventListener('click', (e) =>{
+        var id = document.getElementById('editId').value 
+        var docId = haslaMain[id-1].docId
+        var hasloZapis = document.getElementById('editHaslo');
+        var stronaZapis = document.getElementById('editStrona');
+        var loginZapis = document.getElementById('editLogin');
+        chrome.runtime.sendMessage({command:"updatePassword",data:{hasloMain: localStorage.haslo ,id:localStorage.userId,
+                                    s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value, documentId:docId}},(response)=>{
+            if(response.status=='succes')
+            {
+                alert('Hasło zostało zmienione')
+                tableCreate();
+             
+            }
+            else{
+                alert('Niestety nie udało się zmienić hasła')
+            
+            }
+        });
+    })
+
+
+    const editUsunButton = document.querySelector('#EditUsunButton')
+    editUsunButton.addEventListener('click', (e) =>{ 
+        var id = document.getElementById('editId').value 
+        var docId = haslaMain[id-1].docId
+        chrome.runtime.sendMessage({command:"deletePassword",data:{id:localStorage.userId,documentId:docId}},(response)=>{
+            if(response.status=='succes')
+            {
+                alert('Hasło zostało usunięte')
+                tableCreate();
+             
+            }
+            else{
+                alert('Niestety nie udało się usunąć hasła')
+            
+            }
+        });
+
+
+    })
+
+
 
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click',(e) =>{
@@ -154,6 +201,7 @@ window.onload = function() {
         document.getElementById("loginPanel").style.width = "200px";
     })
 
+    
     const closeButton = document.querySelector('#closeButton')
     closeButton.addEventListener('click',(e) =>{
         localStorage.setItem("login","false")
@@ -216,6 +264,7 @@ window.onload = function() {
         });
     
     })
+
     registerButton.addEventListener('click',(e) =>{
         var Useremail =  document.getElementById("usremail").value;
         var Userpassword =  document.getElementById("usrpassword").value;
@@ -317,6 +366,8 @@ window.onload = function() {
        
      })
 
+     
+
      function tableCreate() {
         var ilosc = 0
         var hasla = new Array()
@@ -328,8 +379,8 @@ window.onload = function() {
         chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {
             if(response.status=='success')
             {
+                haslaMain = response.message.tabHasel;
                 ilosc = response.message.iloscWierszy;
-                hasla = response.message.tabHasel;
 
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
@@ -354,12 +405,37 @@ window.onload = function() {
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
                             if(j==0) {td.textContent = i}
-                            if(j==1) {td.textContent = hasla[i-1].login}
-                            if(j==2) {td.textContent = hasla[i-1].haslo}
-                            if(j==3) {td.textContent = hasla[i-1].strona}
+                            if(j==1) {td.textContent = haslaMain[i-1].login}
+                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
+                            if(j==3) {td.textContent = haslaMain[i-1].strona}
+                            
                             tr.appendChild(td)
+                            var createClickHandler = function(row) {
+                                return function() {
+                                    if(row.getElementsByTagName("td")[0] != undefined){
+                                        var id = row.getElementsByTagName("td")[0].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[1] != undefined){
+                                        var login = row.getElementsByTagName("td")[1].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[2] != undefined){
+                                        var haslo = row.getElementsByTagName("td")[2].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[3] != undefined){
+                                        var strona = row.getElementsByTagName("td")[3].innerHTML
+                                    }
+
+                                    document.getElementById('editId').value = id
+                                    document.getElementById('editLogin').value = login
+                                    document.getElementById('editHaslo').value = haslo
+                                    document.getElementById('editStrona').value = strona
+                                }
+                            }
+                            tr.onclick = createClickHandler(tr);
+                            if(i == 1){
+                                tr.click()
+                            }
                         }
-                        
                     }
                   }
                   tbdy.appendChild(tr);
