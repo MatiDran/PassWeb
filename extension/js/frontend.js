@@ -276,7 +276,7 @@ window.onload = function() {
          code: scriptToRun 
        }, (result) => {
          document.getElementById("loginZapis").value=result[0][0];
-         if(result[0][2]==undefined){
+         if(result[0][2]==undefined||result[0][2]==''){
             document.getElementById("hasloZapis").value=result[0][1];
 
          }
