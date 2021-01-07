@@ -32,14 +32,21 @@ window.onload = function() {
 
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
+            
             document.querySelector('.loged').style.display='block';
-            document.getElementById('baza').style.display="block"
+            document.getElementById('baza').style.display="inline-block"
+            document.getElementById('baza').style.marginRight="15px"
             document.querySelector('.notloged').style.display='none';
+            document.getElementById('loginButton').style.display="none"
+            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('zapiszSideButton').style.marginLeft="15px"
             if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
         } else {
             document.querySelector('.loged').style.display='none';
             document.getElementById('baza').style.display="none"
             document.querySelector('.notloged').style.display='block';
+            document.getElementById('zapiszSideButton').style.display="none"
+            document.getElementById('logoutButton').style.display="none"
         }
         
     }
@@ -197,6 +204,7 @@ window.onload = function() {
 
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click',(e) =>{
+        
         localStorage.setItem("login","true")
         document.getElementById("loginPanel").style.width = "200px";
     })
@@ -297,7 +305,6 @@ window.onload = function() {
     }
     else{
         document.querySelector('.notloged').style.display='block';
-
     }
 
     })
@@ -314,8 +321,15 @@ window.onload = function() {
           {
             document.querySelector('.loged').style.display='block';
             document.querySelector('.notloged').style.display='none';
-            document.getElementById('baza').style.display="block"
+            document.getElementById('baza').style.display="inline-block"
             document.getElementById("loginPanel").style.width = "0";
+            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('baza').style.marginRight="15px"
+            document.getElementById('loginButton').style.display="none"
+            document.getElementById('logoutButton').style.display="inline-block"
+
+            document.getElementById('zapiszSideButton').style.marginLeft="15px"
+
               // event po poprawnym zalogowaniu 
             //localStorage.setItem("UserId",response.user)
             localStorage.setItem("login","false")
@@ -334,6 +348,9 @@ window.onload = function() {
         document.querySelector('.loged').style.display='none';
         document.querySelector('.notloged').style.display='block';
         document.getElementById('baza').style.display="none"
+        document.getElementById('zapiszSideButton').style.display="none"
+        document.getElementById('logoutButton').style.display="block"
+        document.getElementById('loginButton').style.display="inline-block"
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
@@ -466,30 +483,42 @@ window.onload = function() {
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
-                tbl.setAttribute('border', '1');
+                //tbl.style.border = "solid"
+                //tbl.setAttribute('border',"1px");
+               
                 tbl.id = "tablePass"
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
+                  
                   for (var j = 0; j < 4; j++) {
                     {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = "Lp."}
-                            if(j==1) {td.textContent = "login"}
-                            if(j==2) {td.textContent = "haslo"}
-                            if(j==3) {td.textContent = "strona"}
+                            if(j==0) {td.textContent = ""}
+                            if(j==1) {td.textContent = "LOGIN"}
+                            if(j==2) {td.textContent = "HASŁO"}
+                            if(j==3) {td.textContent = "STRONA"}
+                            td.style.fontFamily = 'Comic Sans MS'
+                            td.style.textAlign = "center"
+                            td.style.fontWeight = "bold"
+                            td.style.backgroundColor = "#da7e28"
+                            
                             tr.appendChild(td)
       
                         } else {
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
                             if(j==0) {td.textContent = i}
-                            if(j==1) {td.textContent = haslaMain[i-1].login}
-                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
-                            if(j==3) {td.textContent = haslaMain[i-1].strona}
-                            
+
+                            if(j==1) {td.textContent = hasla[i-1].login}
+                            if(j==2) {td.textContent = hasla[i-1].haslo}
+                            if(j==3) {td.textContent = hasla[i-1].strona}
+                            td.style.borderColor = "orange"
+                            td.style.border = "solid #ffa047 1px "
+
+
                             tr.appendChild(td)
                             var createClickHandler = function(row) {
                                 return function() {
@@ -519,6 +548,8 @@ window.onload = function() {
                         }
                     }
                   }
+
+                  tr.style.backgroundColor = "black";
                   tbdy.appendChild(tr);
                 }
                 tbl.appendChild(tbdy);
