@@ -1,6 +1,8 @@
 
 window.onload = function() {
 
+    
+
     function recoverHTML(){
         var lengthPass = document.getElementById("passlength")
         var lowers = document.getElementById("Lowers")
@@ -34,11 +36,11 @@ window.onload = function() {
         if(localStorage.userId != "0"){//jeśli zalogowany
             
             document.querySelector('.loged').style.display='block';
-            document.getElementById('baza').style.display="inline-block"
+            document.getElementById('baza').style.display="inline-flex"
             document.getElementById('baza').style.marginRight="15px"
             document.querySelector('.notloged').style.display='none';
             document.getElementById('loginButton').style.display="none"
-            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('zapiszSideButton').style.display="inline-flex"
             document.getElementById('zapiszSideButton').style.marginLeft="15px"
             if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
         } else {
@@ -321,12 +323,12 @@ window.onload = function() {
           {
             document.querySelector('.loged').style.display='block';
             document.querySelector('.notloged').style.display='none';
-            document.getElementById('baza').style.display="inline-block"
+            document.getElementById('baza').style.display="inline-flex"
             document.getElementById("loginPanel").style.width = "0";
-            document.getElementById('zapiszSideButton').style.display="inline-block"
+            document.getElementById('zapiszSideButton').style.display="inline-flex"
             document.getElementById('baza').style.marginRight="15px"
             document.getElementById('loginButton').style.display="none"
-            document.getElementById('logoutButton').style.display="inline-block"
+            document.getElementById('logoutButton').style.display="inline-flex"
 
             document.getElementById('zapiszSideButton').style.marginLeft="15px"
 
@@ -350,7 +352,7 @@ window.onload = function() {
         document.getElementById('baza').style.display="none"
         document.getElementById('zapiszSideButton').style.display="none"
         document.getElementById('logoutButton').style.display="block"
-        document.getElementById('loginButton').style.display="inline-block"
+        document.getElementById('loginButton').style.display="inline-flex"
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")

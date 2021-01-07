@@ -1,16 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro');
+
 body {
-  background:rgb(46, 46, 46);
+  background: rgb(56,56,65);
+background: linear-gradient(0deg, rgba(56,56,65,1) 0%, rgba(57,57,62,1) 100%);
   width: max-content;
   min-width: 260px;
   color: white;
+  font-family: 'Roboto Condensed', sans-serif;
 } 
 
+.colored{
+  background:rgb(15, 15, 17);
+  color:rgb(255, 255, 255); 
+  border-radius: 10px;
+}
 
 .checkboxes{
-  margin: 3px;
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 12px;
-
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+  font-family: Courier New;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .generator {
@@ -27,14 +39,18 @@ body {
 }
  
 .password {
+    font-size: 18px;
+    font-family:monospace;
+    font-weight:normal;
     height: 1.5em;
-    padding: 5px;
-    min-width: 200px;
-    border: solid 1px #ffa047;
-    margin: 5px 0;
-    overflow: auto;
-    background-color:  #000000;
+    min-width: 300px;
+    height: 34px;
+    border: solid 1px #ffffff;
+    background:rgb(36, 36, 41);
     color: #fff;
+    border-radius: 5px;
+    margin: auto;
+    padding-top:12px;
 
 }
 
@@ -48,17 +64,25 @@ input[type="checkbox"]
 }
 
 .labelNumber{
-color: #fff;
-background-color: #000000;
-text-align: center;
-width: 40px;
-border: solid 1px #ffa047;}
+  font-size: 16px;
+  font-family: Courier New;
+  font-weight:normal;
+  width: 37px; 
+  height: 20px;
+  margin-left: 85px;
+  position: fixed;
+  border: solid 1px #ffffff;
+  background:rgb(36, 36, 41);
+  color: #fff;
+  border-radius: 5px;
+}
 
 .przerwa {
     width: 150px;
 }
 
-.sidepanel {
+
+.sidepanelLeft {
     height: 280px; /* Specify a height */
     width: 0; 
     padding-top: 7px;
@@ -72,6 +96,36 @@ border: solid 1px #ffa047;}
     border-collapse: collapse;
     border-spacing: 0cm;
 
+}
+
+.sidepanelRight {
+  height: 280px; /* Specify a height */
+  width: 0; 
+  padding-top: 7px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0;
+  right: 0;
+  background-color: rgb(46, 46, 46);
+  overflow-x: hidden; 
+  transition: 0.5s; 
+  border-collapse: collapse;
+  border-spacing: 0cm;
+
+}
+
+.sidepanelUp {
+  height: max-content; /* Specify a height */
+  width: 0; 
+  padding-top: 7px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0;
+  background-color: rgb(46, 46, 46);
+  overflow-x: hidden; 
+  transition: 0s; 
+  border-collapse: collapse;
+  border-spacing: 0cm;
 }
 
   .sidepanel a {
@@ -92,8 +146,9 @@ border: solid 1px #ffa047;}
   border-color: #ffa047;
  } 
 
-  .sidepanel .closebtn {
-    float: right;
+
+  .closebtn {
+    float: left;
     margin-right:10px;
     margin-top: -5px;
     color: red;
@@ -107,7 +162,8 @@ border: solid 1px #ffa047;}
     text-align: center;
     background: transparent;
     border: none;
-    margin-top:10%;
+    font-size: 30px;
+    border-radius: 5px;
   }
   .Copybtn:hover{
     box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
@@ -122,10 +178,10 @@ border: solid 1px #ffa047;}
     background-size: 200% auto;
     color: white;            
     border-radius: 10px;
-    font-family: 'Comic Sans MS', border;
+    font-family: 'Consolas';
+    font-size: 20px;
     -webkit-text-stroke-width: 0.5px;
             -webkit-text-stroke-color: rgb(0, 0, 0);
-    font-size: 14px;
     font-weight: bold;
     border: none;
     outline: none;
@@ -151,8 +207,8 @@ border: solid 1px #ffa047;}
     background-size: 200% auto;
     color: white;            
     border-radius: 10px;
-    font-family: 'Comic Sans MS', border;
-    font-size: 14px;
+    font-family: 'Consolas';
+    font-size: 20px;
     font-weight: bold;
     -webkit-text-stroke-width: 0.5px;
             -webkit-text-stroke-color: rgb(0, 0, 0);
@@ -181,7 +237,12 @@ border: solid 1px #ffa047;}
   font-family: "Lucida Handwriting";
 }
 
-
+.oneLine{
+  margin: auto;
+  display: inline-flex;
+  text-align: center;
+  display: inline-flex;
+}
 
  .left {
    width: 85%;
@@ -193,7 +254,7 @@ border: solid 1px #ffa047;}
  .right {
     width: 15%;
     right: 0;
-    text-align: left;
+    text-align: center;
   
  }
 
@@ -207,8 +268,8 @@ border: solid 1px #ffa047;}
   color: white;            
   border-radius: 10px;
   display: inline-block;
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 16px;
+  font-family: 'Verdana';
+  font-size: 20px;
   font-weight: bold;
   margin: auto;
   margin-top: 40%;
@@ -226,6 +287,40 @@ border: solid 1px #ffa047;}
 }
 
 
+.ButtonZapisz {
+  width: 170px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-block;
+  background-color: transparent;
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  font-family: Comic ;
+  font-size: 15px;
+  transition: .3s;
+}.ButtonZapisz:hover {
+  animation: pulse 1s;
+  transition: .3s;
+} 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(.9);
+  }
+    100% {
+    transform: scale(1);
+  }
+}
+        
 
 
 .btn-grad {
@@ -238,11 +333,11 @@ border: solid 1px #ffa047;}
    color: white;            
    border-radius: 10px;
    display: inline-block;
-   font-family: 'Comic Sans MS', cursive;
+   font-family: 'Consolas';
+    font-size: 20px;
             -webkit-text-stroke-width: 0.5px;
             -webkit-text-stroke-color: rgb(0, 0, 0);
             
-   font-size: 14px;
    font-weight: bold;
    border: none;
    outline: none;
@@ -265,8 +360,8 @@ border: solid 1px #ffa047;}
    color: white;            
    border-radius: 10px;
    display: block;
-   font-family: 'Comic Sans MS', cursive;
-   font-size: 16px;
+   font-family: 'Consolas';
+   font-size: 20px;
    margin: auto;
    border: none;
    outline: none;
@@ -281,3 +376,99 @@ border: solid 1px #ffa047;}
   text-align: center;
 }
 
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
+}
+
+.css-button {
+	font-size: 18px;
+	border-radius: 5px;
+	border: solid 1px #dcdcdc;
+	color: #ffffff;
+	background: transparent;
+	font-family: "Advent Pro", sans-serif;
+	cursor: pointer;
+	text-align: center;
+	user-select: none;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+.css-button:hover {
+  box-shadow: inset 0 0 100px 100px rgba(250, 244, 244, 0.562);
+}
+.css-button:active {
+	position: relative;
+	top: 1px;
+}
+.css-button > span {
+	display: block;
+}
+.css-button-icon {
+	background-color:transparent;
+	border-radius: 5px 0 0 5px;
+	padding: 10px 7px;
+	border-right: 1px solid rgb(255, 255, 255);
+}
+.css-button-icon i {
+	position: relative;
+	font-size: 19px;
+	vertical-align: middle;
+}
+.css-button-text {
+  text-align: center;
+  padding: 0px 15px;
+;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+ 
+  cursor: pointer;
+  color: #ffffff;
+  padding: 5px;
+
+}
+
+.label-text {
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  font-family: "Advent Pro", sans-serif;
+  font-size: 18px;
+  position:fixed;
+  font-weight: normal;
+  margin-left: -120px;
+}
+
+.toggle {
+  height: 10px;
+  width: 30px;
+  margin-left: 90px;
+  position:fixed ;
+  border: solid 1px;
+  border-color: white ;
+  border-radius: 5px;
+  overflow: hidden;
+  
+}
+
+.toggle-state {
+  display: none;
+}
+
+.indicator {
+  height: 100%;
+  width: 200%;
+  background: #ecf0f3;
+  transform: translate3d(-75%, 0, 0);
+  transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  
+}
+
+.toggle-state:checked ~ .indicator {
+  transform: translate3d(25%, 0, 0);
+  background: rgb(158, 240, 82);;
+
+}

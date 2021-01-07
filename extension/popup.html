@@ -18,58 +18,81 @@
       
       <div class="loged" style="display: none;">
       <div class="Center">  
-        <button class="openbtn" id="logoutButton">Wyloguj  <i class="fa fa-power-off"></i></button>
+        <button class="css-button" id="logoutButton" >
+          <span class="css-button-icon"><i class="fa fa-power-off" aria-hidden="true" id="i_pos"></i></span>
+          <span class="css-button-text">Wyloguj</span>
+        </button>
       </div>    
       </div>
       
 
         <form name="generator" class="generator" id="generator">
-          <div class="row">
-          <div class="left">
+        
             <div class="checkboxes">
-                  <label for="passlength">DŁUGOŚĆ HASŁA</label>
-                  <input class="labelNumber" type="number" name="passlength" id="passlength" min="1" value="5" max="30">
+              
+              <label class="label">
+                <div class="label-text">Długość hasła</div>
+        
+                  <input class="labelNumber" type="number" name="passlength" id="passlength" min="1" value="5" max="30">        
+              </label> 
            </div>
             <div class="checkboxes">
-                <label for="Lowers">MAŁE LITERY</label>
-                <input type="checkbox" name="Lowers" id="Lowers">
+              <label class="label">
+                <div class="label-text">MAŁE LITERY</div>
+                <div class="toggle">
+                  <input class="toggle-state" type="checkbox" value="check" name="Lowers" id="Lowers"/>
+                  <div class="indicator"></div>
+                </div>
+              </label> 
             </div>
             <div class="checkboxes">
-                <label for="Capitals">WIELKIE LITERY</label>
-                <input type="checkbox" name="Capitals" id="Capitals" style="margin-left: 10px;">
+              <label class="label">
+                <div class="label-text">WIELKIE LITERY</div>
+                <div class="toggle">
+                  <input class="toggle-state" type="checkbox" value="check" name="Capitals" id="Capitals"/>
+                  <div class="indicator"></div>
+                </div>
+              </label> 
             </div>
             <div class="checkboxes">
-                <label for="Digits">CYFRY</label>
-                <input type="checkbox" name="Digits" id="Digits">
+              <label class="label">
+                <div class="label-text">CYFRY</div>
+                <div class="toggle">
+                  <input class="toggle-state" type="checkbox" value="check" name="Digits" id="Digits"/>
+                  <div class="indicator"></div>
+                </div>
+              </label> 
             </div>
             <div class="checkboxes">
-                <label for="Specials">ZNAKI SPECJALNE</label>
-                <input type="checkbox" name="Specials" id="Specials">
+              <label class="label">
+                <div class="label-text">ZNAKI SPECJALNE</div>
+                <div class="toggle">
+                  <input class="toggle-state" type="checkbox" name="Specials" value="check" id="Specials"/>
+                  <div class="indicator"></div>
+                </div>
+              </label> 
             </div>
-            </div>
-        
-            <div class="right"><button class="Generujbtn"><input type="image" width="50px" src="resources/go.png"></button></div>
-         </div>
+          
+           
+
+            <button class="css-button">
+              <span class="css-button-icon"><i class="fa fa-cog " aria-hidden="true" id="i_pos"></i></span>
+              <span class="css-button-text">Generuj</span>
+            </button>
 
         </form>
-        <div class="row">
-          <div class="Center"></div>
-            <div class="left">
-              <section class="password" id="password"></section>
-            </div>
-            <div class="right">
-              <div class="Center">
-                <button id="copyButton" class="Copybtn"><input type="image" width="30px" src="resources/canvas.png"></button>
-              </div>
-          </div>
-        </div> 
-        
+     
+        <div class="Center">
+        <div class="oneLine">
+              <section class="password" id="password"></section>          
+                <button id="copyButton" class="Copybtn"><i class="fa fa-copy" style="color: floralwhite;"></i></button>
+        </div>
+        </div>
         
        
-        <div id="viewerPanel" class="sidepanel">
+        <div id="viewerPanel" class="sidepanelLeft">
           <button class="closebtn"  id="backToGenerator">&times;</button>
             <section class="przerwa" id="przerwa"></section>
-
             <div id="EditPassword">
               <input placeholder="id" id = 'editId' disabled/>
               <input placeholder="login" id = 'editLogin'/>
@@ -84,7 +107,7 @@
         <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-firestore.js"></script>
 
-        <div id="loginPanel" class="sidepanel">
+        <div id="loginPanel" class="sidepanelUp">
             <button class="closebtn" id="closeButton">&times;</button>
            
             <h1 class="whiteFont">Logowanie</h1>
@@ -99,18 +122,25 @@
         <a href="#"  id="registerButton">Register</a>
         </div> 
         
+        
           
             <div class="Center">
-              <button class="btn-grad" id="baza" style="display: none;" >Moje hasła  <i class="fa fa-th-list"></i></button>
+
+              <button id="baza" class="css-button" style="display: none;">
+                <span class="css-button-icon"><i class="fa fa-th-list" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-text">Moje hasła</span>
+              </button>
                
-            <button class="openbtn" id="zapiszSideButton">Zapisz  <i class="fa fa-cloud" ></i></button>
+              <button id="zapiszSideButton" class="css-button" >
+                <span class="css-button-icon"><i class="fa fa-cloud" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-text">Zapisz</span>
+              </button>
           
             </div>
            
-          
+              
 
-
-      <div id="savePanel" class="sidepanel">
+      <div id="savePanel" class="sidepanelRight">
         <button class="closebtn" id="closeButtonSave">&times;</button>  
         <div>
           <input type="text" placeholder="Strona" class="logowanietext" required="" id="stronaZapis" />
@@ -124,7 +154,7 @@
 
 
         <div class="Center">  
-          <button class="submbutt" id="zapiszButton">ZAPISZ  <i class="fa fa-cloud"></i></button> 
+          <button class="ButtonZapisz" id="zapiszButton">ZAPISZ  <i class="fa fa-cloud"></i></button> 
           <input type="pull" class="openbtn" id="pullBtn" value="pull data" />
 
         </div>  
