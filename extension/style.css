@@ -90,7 +90,8 @@ input[type="checkbox"]
     z-index: 1; 
     top: 0;
     left: 0;
-    background-color: rgb(46, 46, 46);
+    background: rgb(56,56,65);
+background: linear-gradient(0deg, rgba(56,56,65,1) 0%, rgba(57,57,62,1) 100%);
     overflow-x: hidden; 
     transition: 0.5s; 
     border-collapse: collapse;
@@ -108,7 +109,8 @@ input[type="checkbox"]
   top: 0;
   right: 0;
   text-align: center;
-  background-color: rgb(46, 46, 46);
+  background: rgb(56,56,65);
+background: linear-gradient(0deg, rgba(56,56,65,1) 0%, rgba(57,57,62,1) 100%);
   overflow-x: hidden; 
   transition: 0.5s; 
   border-collapse: collapse;
@@ -125,7 +127,8 @@ input[type="checkbox"]
   top: 0;
   right: 0;
   text-align: center;
-  background-color: rgb(46, 46, 46);
+  background: rgb(56,56,65);
+background: linear-gradient(0deg, rgba(56,56,65,1) 0%, rgba(57,57,62,1) 100%);
   overflow-x: hidden; 
   transition: 0s; 
   border-collapse: collapse;
