@@ -28,9 +28,9 @@ window.onload = function() {
             hasloZapis.value    = localStorage.hasloZapis
             stronaZapis.value   = localStorage.stronaZapis
             loginZapis.value    = localStorage.loginZapis
-            savePanel.style.width = "200px"
+            savePanel.style.width = "100%"
         }
-        if(localStorage.login    == "true") {loginPanel.style.width = "200px"}
+        if(localStorage.login    == "true") {loginPanel.style.width = "100%"}
 
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
@@ -42,7 +42,7 @@ window.onload = function() {
             document.getElementById('loginButton').style.display="none"
             document.getElementById('zapiszSideButton').style.display="inline-flex"
             document.getElementById('zapiszSideButton').style.marginLeft="15px"
-            if(localStorage.viewer   == "true") { viewerPanel.style.width = "200px"}
+            if(localStorage.viewer   == "true") { viewerPanel.style.width = "100%"}
         } else {
             document.querySelector('.loged').style.display='none';
             document.getElementById('baza').style.display="none"
@@ -208,7 +208,7 @@ window.onload = function() {
     loginButton.addEventListener('click',(e) =>{
         
         localStorage.setItem("login","true")
-        document.getElementById("loginPanel").style.width = "200px";
+        document.getElementById("loginPanel").style.width = "100%";
     })
 
     
@@ -390,7 +390,7 @@ window.onload = function() {
             tableCreate();
         }
         localStorage.setItem("viewer","true")
-        document.getElementById("viewerPanel").style.width = "200px";
+        document.getElementById("viewerPanel").style.width = "100%";
      })
 
      const backToGenerator = document.querySelector('#backToGenerator')
@@ -414,7 +414,7 @@ window.onload = function() {
         //localStorage.setItem("login","true")
         localStorage.setItem("saver","true")
 
-        document.getElementById("savePanel").style.width = "200px";
+        document.getElementById("savePanel").style.width = "100%";
         var hasloZapis = document.getElementById("hasloZapis");
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");

@@ -12,14 +12,17 @@
 
       <div class="notloged" style="display: block;">
         <div class="Center">
-        <button class="openbtn" id="loginButton">Zaloguj się</button>
+          <button class="css-button"  id="loginButton" >
+            <span class="css-button-icon"><i class="fa fa-sign-in" aria-hidden="true" id="i_pos"></i></span>
+            <span class="css-button-text">Zaloguj się</span>
+          </button>
         </div>  
       </div>
       
       <div class="loged" style="display: none;">
       <div class="Center">  
         <button class="css-button" id="logoutButton" >
-          <span class="css-button-icon"><i class="fa fa-power-off" aria-hidden="true" id="i_pos"></i></span>
+          <span class="css-button-icon"><i class="fa fa-sign-in" aria-hidden="true" id="i_pos"></i></span>
           <span class="css-button-text">Wyloguj</span>
         </button>
       </div>    
@@ -98,8 +101,14 @@
               <input placeholder="login" id = 'editLogin'/>
               <input placeholder="haslo" id = 'editHaslo'/>
               <input placeholder="strona" id = 'editStrona'/>
-              <button id="EditZapiszButton">Zapisz</button>
-              <button id="EditUsunButton">Usun</button>
+              <button id="EditZapiszButton" class="css-button" >
+                <span class="css-button-icon"><i class="fa fa-floppy-o" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-text">Zapisz</span>
+              </button>
+              <button id="EditUsunButton" class="css-button" >
+                <span class="css-button-icon"><i class="fa fa-remove" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-text">Usun</span>
+              </button>
             </div>
         </div>
         
@@ -132,7 +141,7 @@
               </button>
                
               <button id="zapiszSideButton" class="css-button" >
-                <span class="css-button-icon"><i class="fa fa-cloud" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-icon"><i class="fa fa-floppy-o" aria-hidden="true" id="i_pos"></i></span>
                 <span class="css-button-text">Zapisz</span>
               </button>
           
@@ -153,9 +162,16 @@
         </div>
 
 
-        <div class="Center">  
-          <button class="ButtonZapisz" id="zapiszButton">ZAPISZ  <i class="fa fa-cloud"></i></button> 
-          <input type="pull" class="openbtn" id="pullBtn" value="pull data" />
+        <div class="Center"> 
+          <button id="zapiszButton" class="css-button" >
+            <span class="css-button-icon"><i class="fa fa-floppy-o" aria-hidden="true" id="i_pos"></i></span>
+            <span class="css-button-text">Zapisz</span>
+          </button> 
+          <button id="pullBtn" class="css-button" >
+            <span class="css-button-icon"><i class="fa fa-tree" aria-hidden="true" id="i_pos"></i></span>
+            <span class="css-button-text">Pull</span>
+          </button> 
+          
 
         </div>  
       </div>
