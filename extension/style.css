@@ -123,6 +123,8 @@ input[type="checkbox"]
   position: fixed; 
   z-index: 1; 
   top: 0;
+  right: 0;
+  text-align: center;
   background-color: rgb(46, 46, 46);
   overflow-x: hidden; 
   transition: 0s; 
@@ -130,6 +132,11 @@ input[type="checkbox"]
   border-spacing: 0cm;
 }
 
+.ref{
+  color: white;
+  font-family: "Advent Pro", sans-serif;
+  font-size: 20px;
+}
   .sidepanel a {
     padding: 4px 4px 4px 16px;
     text-decoration: none;
@@ -141,13 +148,34 @@ input[type="checkbox"]
   
   .logowanietext
  {
-  background-color: #000000;
+  display: inline;
+  background-color: rgb(36, 36, 41);
   color: #fff;
   margin: 6px;
   border: 1px solid;
-  border-color: #ffa047;
+  border-color: #ffffff;
+  min-width: 300px;
+  height: 30px;
+  font-family: "Advent Pro", sans-serif;
+  font-size: 20px;
+
  } 
 
+ .edittext
+ {
+  display: inline;
+  background-color: rgb(36, 36, 41);
+  color: #fff;
+  margin: 6px;
+  border: 1px solid;
+  border-color: #ffffff;
+  text-align: center;
+  min-width: 300px;
+  height: 20px;
+  font-family: "Advent Pro", sans-serif;
+  font-size: 20px;
+
+ } 
 
   .closebtn {
     position: absolute;
@@ -237,10 +265,10 @@ input[type="checkbox"]
   }
   
 .whiteFont{
-  font-size: 15px;
+  font-size: 25px;
   text-align: center;
   color: white;
-  font-family: "Lucida Handwriting";
+  font-family:"Advent Pro", sans-serif;
 }
 
 .oneLine{

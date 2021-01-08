@@ -97,13 +97,14 @@
           <button class="closebtn"  id="backToGenerator">&times;</button>
             <section class="przerwa" id="przerwa"></section>
             <div id="EditPassword">
-              <input placeholder="id" id = 'editId' disabled/>
-              <input placeholder="login" id = 'editLogin'/>
-              <input placeholder="haslo" id = 'editHaslo'/>
-              <input placeholder="strona" id = 'editStrona'/>
+              <input placeholder="id" id = 'editId' class="edittext" disabled/>
+              <input placeholder="login" id = 'editLogin' class="edittext"/>
+              <input placeholder="haslo" id = 'editHaslo' class="edittext"/>
+              <input placeholder="strona" id = 'editStrona' class="edittext"/>
+
               <button id="EditZapiszButton" class="css-button" >
-                <span class="css-button-icon"><i class="fa fa-floppy-o" aria-hidden="true" id="i_pos"></i></span>
-                <span class="css-button-text">Zapisz</span>
+                <span class="css-button-icon"><i class="fa fa-edit" aria-hidden="true" id="i_pos"></i></span>
+                <span class="css-button-text">Edytuj</span>
               </button>
               <button id="EditUsunButton" class="css-button" >
                 <span class="css-button-icon"><i class="fa fa-remove" aria-hidden="true" id="i_pos"></i></span>
@@ -125,10 +126,19 @@
       </div>
   
         <input  type="password" placeholder="Hasło" class="logowanietext" required="" id="usrpassword" />
-        <input type="submit" class="submbutt" id="submitButton" value="Zaloguj" />
-  
-        <a href="#">Lost your password?</a>
-        <a href="#"  id="registerButton">Register</a>
+
+        <div class="Center">
+        <button class="css-button"   id="submitButton" >
+          <span class="css-button-icon"><i class="fa fa-sign-in" aria-hidden="true" id="i_pos"></i></span>
+          <span class="css-button-text">Zaloguj się</span>
+        </button>
+        </div>
+        <div class="Center">
+        <a href="#" class="ref">Lost your password?</a>
+        </div>
+        <div class="Center">
+        <a href="#"  class="ref" id="registerButton">Register</a>
+        </div>
         </div> 
         
         

@@ -424,6 +424,41 @@ window.onload = function() {
 
         localStorage.setItem("loginZapis","")
         localStorage.setItem("hasloZapis", outputPassword.textContent)
+
+        const scriptToRun = `
+        var values = [];
+        var inputFields = document.getElementsByTagName('input');
+        for (var i = 0; i < inputFields.length; i++) {
+
+
+         if(inputFields[i].type=='text'||inputFields[i].type=='email')
+             {
+                 values.push(inputFields[i].value);
+             }
+         if(inputFields[i].type=='password')
+             {
+                  values.push(inputFields[i].value);
+             }
+           
+        }
+        values;`;
+
+    chrome.tabs.executeScript({
+      code: scriptToRun 
+     
+    }, (result) => {
+      document.getElementById("loginZapis").value=result[0][0];
+      if(result[0][2]==undefined){
+         document.getElementById("hasloZapis").value=result[0][1];
+
+      }
+      else
+      if(result[0][2]!=undefined){
+         document.getElementById("hasloZapis").value=result[0][2];
+      }
+      if(document.getElementById("hasloZapis").value==''){  
+        hasloZapis.value = outputPassword.textContent ;   }
+    });
      })
 
      closeButtonSave.addEventListener('click',(e)=>{
@@ -468,6 +503,7 @@ window.onload = function() {
 
      
 
+
      function tableCreate() {
         var ilosc = 0
         var hasla = new Array()
@@ -485,42 +521,30 @@ window.onload = function() {
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
-                //tbl.style.border = "solid"
-                //tbl.setAttribute('border',"1px");
-               
+                tbl.setAttribute('border', '1');
                 tbl.id = "tablePass"
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
-                  
                   for (var j = 0; j < 4; j++) {
                     {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = ""}
-                            if(j==1) {td.textContent = "LOGIN"}
-                            if(j==2) {td.textContent = "HASŁO"}
-                            if(j==3) {td.textContent = "STRONA"}
-                            td.style.fontFamily = 'Comic Sans MS'
-                            td.style.textAlign = "center"
-                            td.style.fontWeight = "bold"
-                            td.style.backgroundColor = "#da7e28"
-                            
+                            if(j==0) {td.textContent = "Lp."}
+                            if(j==1) {td.textContent = "login"}
+                            if(j==2) {td.textContent = "haslo"}
+                            if(j==3) {td.textContent = "strona"}
                             tr.appendChild(td)
       
                         } else {
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
                             if(j==0) {td.textContent = i}
-
-                            if(j==1) {td.textContent = hasla[i-1].login}
-                            if(j==2) {td.textContent = hasla[i-1].haslo}
-                            if(j==3) {td.textContent = hasla[i-1].strona}
-                            td.style.borderColor = "orange"
-                            td.style.border = "solid #ffa047 1px "
-
-
+                            if(j==1) {td.textContent = haslaMain[i-1].login}
+                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
+                            if(j==3) {td.textContent = haslaMain[i-1].strona}
+                            
                             tr.appendChild(td)
                             var createClickHandler = function(row) {
                                 return function() {
@@ -550,8 +574,6 @@ window.onload = function() {
                         }
                     }
                   }
-
-                  tr.style.backgroundColor = "black";
                   tbdy.appendChild(tr);
                 }
                 tbl.appendChild(tbdy);
@@ -568,6 +590,7 @@ window.onload = function() {
         tableCreate() 
 
 }
+
 
 
 
