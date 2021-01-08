@@ -521,8 +521,11 @@ window.onload = function() {
                 var body = document.getElementById('viewerPanel');
                 var tbl = document.createElement('table');
                 tbl.style.width = '100%';
-                tbl.setAttribute('border', '1');
+               // tbl.setAttribute('border', '1');
                 tbl.id = "tablePass"
+                tbl.style.marginTop = '6px'
+                tbl.style.marginBottom = ' 25px'
+                tbl.style.borderSpacing = '0px'
                 var tbdy = document.createElement('tbody');
                 for (var i = 0; i < 1 + ilosc; i++) {
                   var tr = document.createElement('tr');
@@ -531,10 +534,18 @@ window.onload = function() {
                         if(i==0){ //wiersz z labelami
                             var td = document.createElement('td');
                             td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = "Lp."}
-                            if(j==1) {td.textContent = "login"}
-                            if(j==2) {td.textContent = "haslo"}
-                            if(j==3) {td.textContent = "strona"}
+                            if(j==0) {td.textContent = ""}
+                            if(j==1) {td.textContent = "Login"}
+                            if(j==2) {td.textContent = "Hasło"}
+                            if(j==3) {td.textContent = "Strona"}
+
+                            td.style.borderStyle = 'solid';
+                            td.style.borderWidth = '1.2px';
+                            td.style.borderColor = "white";
+                            td.style.fontFamily ="Advent Pro, sans-serif"
+                            td.style.fontSize = "16px";
+                            td.style.textAlign = "center"
+                            td.style.backgroundColor = 'rgb(36, 36, 41)'
                             tr.appendChild(td)
       
                         } else {
@@ -544,7 +555,11 @@ window.onload = function() {
                             if(j==1) {td.textContent = haslaMain[i-1].login}
                             if(j==2) {td.textContent = haslaMain[i-1].haslo}
                             if(j==3) {td.textContent = haslaMain[i-1].strona}
-                            
+                            td.style.borderStyle = 'solid';
+                            td.style.borderWidth = '1px';
+                            td.style.borderColor = "white";
+                            td.style.fontFamily ="Advent Pro, sans-serif";
+                            td.style.fontSize = "13px";
                             tr.appendChild(td)
                             var createClickHandler = function(row) {
                                 return function() {
