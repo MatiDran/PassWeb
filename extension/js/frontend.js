@@ -220,85 +220,57 @@ window.onload = function() {
     const pullData = document.querySelector('#pullBtn')
 
 
-// not yet working function adding button next to password line 
-    function AddButtonOnPasswd(){
-        const scriptToRun = `
-          var val =''; 
-          var inputFields = document.getElementsByTagName('input');
-               for (var i = 0; i < inputFields.length; i++) {
-    
-                if(inputFields[i].type=='password')
-                    {
-                        var button = document.createElement("button");
-                        button.innerHTML = "generate";
-                        inputFields[i].appendChild(button);
-    
-                        button.addEventListener ("click", function() {
-                            val="Button working";
-                            // generate passwd and paste it to inputFields[i].val
-
-                          });
-                     }
-                  
-               }
-          
-          
-          `;
-        chrome.tabs.executeScript({
-            code: scriptToRun 
-          }, (result) => {
-              console.log(result);
-            
-          });
-    
-      }
-   
-
     pullData.addEventListener('click',(e) =>{
-     //  AddButtonOnPasswd(); // just testing delate this 
-        chrome.tabs.query({currentWindow: true,active: true},
-            function(tabs){
-             var link= tabs[0].url;     
-            document.getElementById("stronaZapis").value=link;
-            })
-
-       
-      
-       const scriptToRun = `
-           var values = [];
-           var inputFields = document.getElementsByTagName('input');
-           for (var i = 0; i < inputFields.length; i++) {
-
-
-            if(inputFields[i].type=='text'||inputFields[i].type=='email')
+        var login= document.getElementById('editLogin').value;
+        var haslo=  document.getElementById('editHaslo').value;
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id,{command:'dataSend',data:{ login: login,paswd: haslo}}
+            , function(response) {
+              console.log(response);
+            });
+          });
+        const scriptToRun = `
+            var login;
+            var haslo;
+            var inputFields = document.getElementsByTagName('input');
+            chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+                if(message.command=='dataSend')
                 {
-                    values.push(inputFields[i].value);
+                    login =message.data.login;
+                    haslo =message.data.paswd;
                 }
-            if(inputFields[i].type=='password')
-                {
-                     values.push(inputFields[i].value);
-                }
+            });
+            for (var i = 0; i < inputFields.length; i++) {
+               
+ 
+             if(inputFields[i].type=='text'||inputFields[i].type=='email')
+                 {
+                     inputFields[i].value=login;
+                 }
+             if(inputFields[i].type=='password')
+                 {
+                     inputFields[i].value=haslo;
+                 }
+               
+            }
+            values;`;
+            setTimeout(function (){
+
+                chrome.tabs.executeScript({
+                    code: scriptToRun 
+                    
+                  }, (result) => {
+                      console.log(result);
+                    
+                  });
               
-           }
-           values;`;
+              }, 100);
+           
+ 
+     })
+
+
    
-       chrome.tabs.executeScript({
-         code: scriptToRun 
-       }, (result) => {
-         document.getElementById("loginZapis").value=result[0][0];
-         if(result[0][2]==undefined){
-            document.getElementById("hasloZapis").value=result[0][1];
-
-         }
-         else
-         if(result[0][2]!=undefined){
-            document.getElementById("hasloZapis").value=result[0][2];
-         }
-       });
-       
-
-    })
-
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
     console.log(response);
@@ -584,7 +556,9 @@ window.onload = function() {
                             }
                             tr.onclick = createClickHandler(tr);
                             if(i == 1){
-                                tr.click()
+                                tr.click();
+                                
+                                
                             }
                         }
                     }
