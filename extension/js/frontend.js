@@ -199,7 +199,7 @@ window.onload = function() {
     function addButtonToPassword(){
         var inputs = document.getElementsByTagName('input');
         for(var i = 0; i < inputs.length; i++) {
-            if(inputs[i].type.toLowerCase() == 'password' && inputs[i].name.toLowerCase() != "popuppassword") {
+            if((inputs[i].type.toLowerCase() == 'password' || inputs[i].name.toLowerCase() == "password") && inputs[i].name.toLowerCase() != "popuppassword") {
                 //alert(inputs[i].value);
                 //inputs[i].value = "dupa"
                 var loginInput = inputs[i-1]
@@ -214,11 +214,11 @@ window.onload = function() {
           el.innerHTML = "Użyj PassWeb";
           el.onclick = function() {
               //alert("clicked")
-              chrome.tab.create({url:"popup.html"})
-              
+              //chrome.tab.create({url:"popup.html"})
               //chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {})
           }
-          passwordInput.parentNode.appendChild(el)
+          passwordInput.parentNode.parentNode.appendChild(el)
+          //document.insertBefore(el,passwordInput.parentNode )
         }
     }
     
