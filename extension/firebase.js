@@ -8,17 +8,18 @@ var firebaseConfig = {
     appId: "1:608568818489:web:0e07b7699bea95a884c6e8"
   };
 
+  var hasla = new Array();
+
   firebase.initializeApp(firebaseConfig);
 
   console.log(firebase);
 
 
   chrome.runtime.onMessage.addListener((msg,sender,response)=>{
+
         if(msg.command=='logoutAuth'){
                 fiirebase.auth().signOut().then(function(){
-
                         response({type:"un-auth",status:"succes",message:true});
-
 
                 },function(error){
                     response({type:"un-auth",status:"false",message:error});
