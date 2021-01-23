@@ -1,10 +1,10 @@
 
 window.onload = function() {
 
-    
-
     function recoverHTML(){
         var lengthPass = document.getElementById("passlength")
+
+
         var lowers = document.getElementById("Lowers")
         var capitals = document.getElementById("Capitals")
         var digits = document.getElementById("Digits")
@@ -16,46 +16,81 @@ window.onload = function() {
         var stronaZapis = document.getElementById("stronaZapis");
         var loginZapis = document.getElementById("loginZapis");
         
-        
 
-        if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
-        if(localStorage.lowers   == "true") { lowers.checked    = true } else{ lowers.checked = false }
-        if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
-        if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
-        if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
-        
-        if(localStorage.saver    == "true") {
-            hasloZapis.value    = localStorage.hasloZapis
-            stronaZapis.value   = localStorage.stronaZapis
-            loginZapis.value    = localStorage.loginZapis
-            savePanel.style.width = "100%"
-        }
-        if(localStorage.login    == "true") {loginPanel.style.width = "100%"}
+            if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
+            if(localStorage.lowers   == "true") { lowers.checked     = true} else{ lowers.checked = false }
+            if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
+            if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
+            if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
 
-        console.log(localStorage.userId)
-        if(localStorage.userId != "0"){//jeśli zalogowany
-            
-            document.querySelector('.loged').style.display='block';
-            document.getElementById('baza').style.display="inline-flex"
-            document.getElementById('baza').style.marginRight="15px"
-            document.querySelector('.notloged').style.display='none';
-            document.getElementById('loginButton').style.display="none"
-            document.getElementById('zapiszSideButton').style.display="inline-flex"
-            document.getElementById('zapiszSideButton').style.marginLeft="15px"
-            if(localStorage.viewer   == "true") { viewerPanel.style.width = "100%"}
-        } else {
-            document.querySelector('.loged').style.display='none';
-            document.getElementById('baza').style.display="none"
-            document.querySelector('.notloged').style.display='block';
-            document.getElementById('zapiszSideButton').style.display="none"
-            document.getElementById('logoutButton').style.display="none"
-        }
-        
+            if(localStorage.saver    == "true") {
+                hasloZapis.value    = localStorage.hasloZapis
+                stronaZapis.value   = localStorage.stronaZapis
+                loginZapis.value    = localStorage.loginZapis
+                savePanel.style.width = "100%"
+            }
+            if(localStorage.login    == "true") {loginPanel.style.width = "100%"}
+    
+            console.log(localStorage.userId)
+            if(localStorage.userId != "0"){//jeśli zalogowany
+                
+                document.querySelector('.loged').style.display='block';
+                document.getElementById('baza').style.display="inline-flex"
+                document.getElementById('baza').style.marginRight="15px"
+                document.querySelector('.notloged').style.display='none';
+                document.getElementById('loginButton').style.display="none"
+                document.getElementById('zapiszSideButton').style.display="inline-flex"
+                document.getElementById('zapiszSideButton').style.marginLeft="15px"
+                if(localStorage.viewer   == "true") { viewerPanel.style.width = "100%"}
+            } else {
+                document.querySelector('.loged').style.display='none';
+                document.getElementById('baza').style.display="none"
+                document.querySelector('.notloged').style.display='block';
+                document.getElementById('zapiszSideButton').style.display="none"
+                document.getElementById('logoutButton').style.display="none"
+            }
+
     }
 
     var haslaMain ={}
 
+    function addButtonToPassword(){
+        var inputs = document.getElementsByTagName('input');
+        for(var i = 0; i < inputs.length; i++) {
+            if(inputs[i].type.toLowerCase() == 'password' && inputs[i].name.toLowerCase() != "popuppassword") {
+                //alert(inputs[i].value);
+                //inputs[i].value = "dupa"
+                var loginInput = inputs[i-1]
+                var passwordInput = inputs[i]
+                break;
+            }
+        }
+    
+        //var div = document.getElementsByName("Password")[0]
+        if(passwordInput){
+          var el = document.createElement("LI");
+          el.innerHTML = "Użyj PassWeb";
+          el.onclick = function() {
+    
+              passwordInput.value = "dupa"
+              loginInput.value = "login"
+    
+          }
+          passwordInput.parentNode.appendChild(el)
+        }
+    }
+
+    addButtonToPassword();
+    //if(document.title.toLowerCase() == "passgenerator"){}
     recoverHTML();
+    
+    
+
+    
+
+    
+
+
 
     var lengthPass = document.getElementById("passlength")
     lengthPass.addEventListener('input',(e)=>{
@@ -139,6 +174,8 @@ window.onload = function() {
 
         e.preventDefault();
     })
+
+    
 
     
     function copyToClipboard(text) {
@@ -473,7 +510,7 @@ window.onload = function() {
        
      })
 
-     
+
 
 
      function tableCreate() {
@@ -576,7 +613,12 @@ window.onload = function() {
         })
     }
     
-        tableCreate() 
+    tableCreate();
+
+
+
+
+
 
 }
 
