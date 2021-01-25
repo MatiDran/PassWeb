@@ -183,9 +183,10 @@ background: linear-gradient(0deg, rgba(56,56,65,1) 0%, rgba(57,57,62,1) 100%);
   .closebtn {
     position: absolute;
     color: red;
-    font-size: 36px;
+    font-size: 20px;
     right: 1px;
     top: 1px;
+    margin: 0;
     background: transparent;
     border:none;
     box-shadow: none;

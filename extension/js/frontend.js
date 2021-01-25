@@ -1,7 +1,22 @@
 
 window.onload = function() {
-
-    
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
 
     function recoverHTML(){
         var lengthPass = document.getElementById("passlength")
@@ -28,7 +43,7 @@ window.onload = function() {
             hasloZapis.value    = localStorage.hasloZapis
             stronaZapis.value   = localStorage.stronaZapis
             loginZapis.value    = localStorage.loginZapis
-            savePanel.style.width = "100%"
+            
         }
         if(localStorage.login    == "true") {loginPanel.style.width = "100%"}
 
@@ -42,7 +57,7 @@ window.onload = function() {
             document.getElementById('loginButton').style.display="none"
             document.getElementById('zapiszSideButton').style.display="inline-flex"
             document.getElementById('zapiszSideButton').style.marginLeft="15px"
-            if(localStorage.viewer   == "true") { viewerPanel.style.width = "100%"}
+            if(localStorage.viewer   == "true") {}
         } else {
             document.querySelector('.loged').style.display='none';
             document.getElementById('baza').style.display="none"
@@ -125,10 +140,13 @@ window.onload = function() {
         var typeSum = lowers + capitals + digits + specials;
 
         if(typeSum == 0) {
-            alert("Zaznacz przynajmniej jeden rodzaj znaków");
+               
+                  toastr.error("Zaznacz przynajmniej jeden rodzaj znaków")
+                  
+          
         }else {
             if(typeSum > passLength){
-                alert("Zbyt krótka długość hasła");
+                toastr.error("Zbyt krótka długość hasła");
             } else{
                
             var passwd = myFunction(passLength,lowers,capitals,digits,specials);
@@ -170,12 +188,12 @@ window.onload = function() {
                                     s:stronaZapis.value,l: loginZapis.value,p: hasloZapis.value, documentId:docId}},(response)=>{
             if(response.status=='succes')
             {
-                alert('Hasło zostało zmienione')
+                toastr.success('Hasło zostało zmienione')
                 tableCreate();
              
             }
             else{
-                alert('Niestety nie udało się zmienić hasła')
+                toastr.error('Niestety nie udało się zmienić hasła')
             
             }
         });
@@ -189,12 +207,12 @@ window.onload = function() {
         chrome.runtime.sendMessage({command:"deletePassword",data:{id:localStorage.userId,documentId:docId}},(response)=>{
             if(response.status=='succes')
             {
-                alert('Hasło zostało usunięte')
+                toastr.success('Hasło zostało usunięte')
                 tableCreate();
              
             }
             else{
-                alert('Niestety nie udało się usunąć hasła')
+                toastr.error('Niestety nie udało się usunąć hasła')
             
             }
         });
@@ -217,7 +235,7 @@ window.onload = function() {
         localStorage.setItem("login","false")
         document.getElementById("loginPanel").style.width = "0";
     })
-    const pullData = document.querySelector('#pullBtn')
+   
 
 
 // not yet working function adding button next to password line 
@@ -254,50 +272,7 @@ window.onload = function() {
       }
    
 
-    pullData.addEventListener('click',(e) =>{
-     //  AddButtonOnPasswd(); // just testing delate this 
-        chrome.tabs.query({currentWindow: true,active: true},
-            function(tabs){
-             var link= tabs[0].url;     
-            document.getElementById("stronaZapis").value=link;
-            })
 
-       
-      
-       const scriptToRun = `
-           var values = [];
-           var inputFields = document.getElementsByTagName('input');
-           for (var i = 0; i < inputFields.length; i++) {
-
-
-            if(inputFields[i].type=='text'||inputFields[i].type=='email')
-                {
-                    values.push(inputFields[i].value);
-                }
-            if(inputFields[i].type=='password')
-                {
-                     values.push(inputFields[i].value);
-                }
-              
-           }
-           values;`;
-   
-       chrome.tabs.executeScript({
-         code: scriptToRun 
-       }, (result) => {
-         document.getElementById("loginZapis").value=result[0][0];
-         if(result[0][2]==undefined){
-            document.getElementById("hasloZapis").value=result[0][1];
-
-         }
-         else
-         if(result[0][2]!=undefined){
-            document.getElementById("hasloZapis").value=result[0][2];
-         }
-       });
-       
-
-    })
 
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
@@ -373,11 +348,11 @@ window.onload = function() {
            
            if(response.status=='succes')
            {
-               alert("Rejestracja powiodła sie");
+            toastr.success("Rejestracja powiodła sie");
                
            }
            else{
-                 alert("Rejestracja nie powiodła sie")
+            toastr.error("Rejestracja nie powiodła sie")
            }
        });
  
@@ -485,14 +460,14 @@ window.onload = function() {
                 loginZapis.value=""
                 document.getElementById("savePanel").style.width = "0px";
                 
-                alert('Hasło zostało zapisane do bazy')
+                toastr.success('Hasło zostało zapisane do bazy')
                 localStorage.setItem("saver","false")
                 tableCreate();
                 // event po poprawnym zapisaniu 
              
             }
             else{
-                alert('Niestety nie udało się zapisać hasła')
+                toastr.error('Niestety nie udało się zapisać hasła')
             // event po niepoprawnym zalogowaniu 
             
             }
@@ -596,7 +571,7 @@ window.onload = function() {
                 
             }
             else{
-                  alert("Problem przy wyciągnięciu danych z bazy")
+                toastr.error("Problem przy wyciągnięciu danych z bazy")
             }
             
         })
