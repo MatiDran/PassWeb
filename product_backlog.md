@@ -28,7 +28,9 @@ _________________________________________________
 20. Przejście na Angular
 21. Automatyczne wykrywanie kiedy jest możliwość wpisania hasła
 22. Poprawa użytkowania aplikacji
-
-
+_________________________________________________
+23. Wpisywanie danych z bazy do pól
+24. Poprawa alertów
+25. Dodanie labelki na stronie informującej o możliwości użycia dodatku
 
 

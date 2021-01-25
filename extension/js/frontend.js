@@ -1,5 +1,6 @@
 
 window.onload = function() {
+
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -18,35 +19,60 @@ window.onload = function() {
         "hideMethod": "fadeOut"
       }
 
+
+    var userIdTest;
+
+
+    //funkcje
     function recoverHTML(){
         var lengthPass = document.getElementById("passlength")
+        lengthPass.addEventListener('input',(e)=>{
+            localStorage.setItem("lengthPass",lengthPass.value)
+        })
         var lowers = document.getElementById("Lowers")
+        lowers.addEventListener('change', (e)=>{
+            localStorage.setItem("lowers",lowers.checked)
+        })
         var capitals = document.getElementById("Capitals")
+        capitals.addEventListener('change', (e)=>{
+            localStorage.setItem("capitals",capitals.checked)
+        })
         var digits = document.getElementById("Digits")
+        digits.addEventListener('change', (e)=>{
+            localStorage.setItem("digits",digits.checked)
+        })
         var specials = document.getElementById("Specials")
-        var viewerPanel = document.getElementById("viewerPanel")
-        var loginPanel = document.getElementById("loginPanel")
-        var savePanel = document.getElementById("savePanel")
+        specials.addEventListener('change', (e)=>{
+            localStorage.setItem("specials",specials.checked)
+        })
         var hasloZapis = document.getElementById("hasloZapis");
+        hasloZapis.addEventListener('change', (e)=>{
+            localStorage.setItem("hasloZapis",hasloZapis.value)
+        })
         var stronaZapis = document.getElementById("stronaZapis");
+        stronaZapis.addEventListener('change', (e)=>{
+            localStorage.setItem("stronaZapis",stronaZapis.value)
+        })
         var loginZapis = document.getElementById("loginZapis");
-        
+        loginZapis.addEventListener('change', (e)=>{
+            localStorage.setItem("loginZapis",loginZapis.value)
+        })
         
 
         if(localStorage.lengthPass) {lengthPass.value = localStorage.lengthPass}
-        if(localStorage.lowers   == "true") { lowers.checked    = true } else{ lowers.checked = false }
+        if(localStorage.lowers   == "true") { lowers.checked     = true} else{ lowers.checked = false }
         if(localStorage.capitals == "true") { capitals.checked  = true } else{ capitals.checked = false }
         if(localStorage.digits   == "true") { digits.checked    = true } else{ digits.checked = false }
         if(localStorage.specials == "true") { specials.checked  = true } else{ specials.checked = false }
-        
+
         if(localStorage.saver    == "true") {
-            hasloZapis.value    = localStorage.hasloZapis
+        hasloZapis.value    = localStorage.hasloZapis
             stronaZapis.value   = localStorage.stronaZapis
             loginZapis.value    = localStorage.loginZapis
             
         }
         if(localStorage.login    == "true") {loginPanel.style.width = "100%"}
-
+    
         console.log(localStorage.userId)
         if(localStorage.userId != "0"){//jeśli zalogowany
             
@@ -64,47 +90,164 @@ window.onload = function() {
             document.querySelector('.notloged').style.display='block';
             document.getElementById('zapiszSideButton').style.display="none"
             document.getElementById('logoutButton').style.display="none"
-        }
-        
+            }
+
     }
 
-    var haslaMain ={}
+    function copyToClipboard(text) {
+        const input = document.createElement('input');
+        input.style.position = 'fixed';
+        input.style.opacity = 0;
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+    };
 
+    function getSite(okno) {
+        chrome.tabs.getSelected(null, function(tab) {
+            var currentURL = document.createElement('a')
+            currentURL.href=tab.url;
+            okno.value = currentURL.hostname
+            localStorage.setItem("stronaZapis",currentURL.hostname)
+        });
+    }
+
+     function tableCreate() {
+        var ilosc = 0
+        var hasla = new Array()
+        var tablePass = document.getElementById("tablePass")
+        if(document.contains(tablePass)){
+            tablePass.remove()
+        }
+
+        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {
+            if(response.status=='success')
+            {
+
+
+                haslaMain = response.message.tabHasel;
+                ilosc = response.message.iloscWierszy;
+
+                var body = document.getElementById('viewerPanel');
+                var tbl = document.createElement('table');
+                tbl.style.width = '100%';
+               // tbl.setAttribute('border', '1');
+                tbl.id = "tablePass"
+                tbl.style.marginTop = '6px'
+                tbl.style.marginBottom = ' 25px'
+                tbl.style.borderSpacing = '0px'
+                var tbdy = document.createElement('tbody');
+                for (var i = 0; i < 1 + ilosc; i++) {
+                  var tr = document.createElement('tr');
+                  for (var j = 0; j < 4; j++) {
+                    {
+                        if(i==0){ //wiersz z labelami
+                            var td = document.createElement('td');
+                            td.appendChild(document.createTextNode('\u0020'))
+                            if(j==0) {td.textContent = ""}
+                            if(j==1) {td.textContent = "Login"}
+                            if(j==2) {td.textContent = "Hasło"}
+                            if(j==3) {td.textContent = "Strona"}
+
+                            td.style.borderStyle = 'solid';
+                            td.style.borderWidth = '1.2px';
+                            td.style.borderColor = "white";
+                            td.style.fontFamily ="Advent Pro, sans-serif"
+                            td.style.fontSize = "16px";
+                            td.style.textAlign = "center"
+                            td.style.backgroundColor = 'rgb(36, 36, 41)'
+                            tr.appendChild(td)
+      
+                        } else {
+                            var td = document.createElement('td');
+                            td.appendChild(document.createTextNode('\u0020'))
+                            if(j==0) {td.textContent = i}
+                            if(j==1) {td.textContent = haslaMain[i-1].login}
+                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
+                            if(j==3) {td.textContent = haslaMain[i-1].strona}
+                            td.style.borderStyle = 'solid';
+                            td.style.borderWidth = '1px';
+                            td.style.borderColor = "white";
+                            td.style.fontFamily ="Advent Pro, sans-serif";
+                            td.style.fontSize = "13px";
+                            tr.appendChild(td)
+                            var createClickHandler = function(row) {
+                                return function() {
+                                    if(row.getElementsByTagName("td")[0] != undefined){
+                                        var id = row.getElementsByTagName("td")[0].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[1] != undefined){
+                                        var login = row.getElementsByTagName("td")[1].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[2] != undefined){
+                                        var haslo = row.getElementsByTagName("td")[2].innerHTML
+                                    }
+                                    if(row.getElementsByTagName("td")[3] != undefined){
+                                        var strona = row.getElementsByTagName("td")[3].innerHTML
+                                    }
+
+                                    document.getElementById('editId').value = id
+                                    document.getElementById('editLogin').value = login
+                                    document.getElementById('editHaslo').value = haslo
+                                    document.getElementById('editStrona').value = strona
+                                }
+                            }
+                            tr.onclick = createClickHandler(tr);
+                            if(i == 1){
+                                tr.click();
+                                
+                                
+                            }
+                        }
+                    }
+                  }
+                  tbdy.appendChild(tr);
+                }
+                tbl.appendChild(tbdy);
+                body.appendChild(tbl)
+                
+            }
+            else{
+                  alert("Problem przy wyciągnięciu danych z bazy")
+            }
+            
+        })
+    }
+
+    function addButtonToPassword(){
+        var inputs = document.getElementsByTagName('input');
+        for(var i = 0; i < inputs.length; i++) {
+            if((inputs[i].type.toLowerCase() == 'password' || inputs[i].name.toLowerCase() == "password") && inputs[i].name.toLowerCase() != "popuppassword") {
+                //alert(inputs[i].value);
+                //inputs[i].value = "dupa"
+                var loginInput = inputs[i-1]
+                var passwordInput = inputs[i]
+                break;
+            }
+        }
+    
+        //var div = document.getElementsByName("Password")[0]
+        if(passwordInput){
+          var el = document.createElement("LI");
+          el.innerHTML = "Użyj PassWeb";
+          el.onclick = function() {
+              //alert("clicked")
+              //chrome.tab.create({url:"popup.html"})
+              //chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {})
+          }
+          passwordInput.parentNode.parentNode.appendChild(el)
+          //document.insertBefore(el,passwordInput.parentNode )
+        }
+    }
+    
+    if(document.title.toLocaleLowerCase() == "password generator"){
+    
+    var haslaMain ={};
+    tableCreate();
     recoverHTML();
 
-    var lengthPass = document.getElementById("passlength")
-    lengthPass.addEventListener('input',(e)=>{
-        localStorage.setItem("lengthPass",lengthPass.value)
-    })
-    var lowers = document.getElementById("Lowers")
-    lowers.addEventListener('change', (e)=>{
-        localStorage.setItem("lowers",lowers.checked)
-    })
-    var capitals = document.getElementById("Capitals")
-    capitals.addEventListener('change', (e)=>{
-        localStorage.setItem("capitals",capitals.checked)
-    })
-    var digits = document.getElementById("Digits")
-    digits.addEventListener('change', (e)=>{
-        localStorage.setItem("digits",digits.checked)
-    })
-    var specials = document.getElementById("Specials")
-    specials.addEventListener('change', (e)=>{
-        localStorage.setItem("specials",specials.checked)
-    })
-    var hasloZapis = document.getElementById("hasloZapis");
-    hasloZapis.addEventListener('change', (e)=>{
-        localStorage.setItem("hasloZapis",hasloZapis.value)
-    })
-    var stronaZapis = document.getElementById("stronaZapis");
-    stronaZapis.addEventListener('change', (e)=>{
-        localStorage.setItem("stronaZapis",stronaZapis.value)
-    })
-    var loginZapis = document.getElementById("loginZapis");
-    loginZapis.addEventListener('change', (e)=>{
-        localStorage.setItem("loginZapis",loginZapis.value)
-    })
-    
     const formInstance = document.querySelector('#generator');
     const outputPassword = document.querySelector('#password');
 
@@ -128,6 +271,8 @@ window.onload = function() {
             return groupname in data;
         }
     }
+
+
 
     formInstance.addEventListener('submit', (e) => {
         const data = form.getJSON(formInstance);
@@ -159,16 +304,9 @@ window.onload = function() {
     })
 
     
-    function copyToClipboard(text) {
-        const input = document.createElement('input');
-        input.style.position = 'fixed';
-        input.style.opacity = 0;
-        input.value = text;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand('Copy');
-        document.body.removeChild(input);
-      };
+
+    
+    
 
     const copyButton = document.querySelector('#copyButton')
     copyButton.addEventListener('click',(e) =>{
@@ -238,6 +376,7 @@ window.onload = function() {
    
 
 
+
 // not yet working function adding button next to password line 
     function AddButtonOnPasswd(){
         const scriptToRun = `
@@ -273,7 +412,7 @@ window.onload = function() {
    
 
 
-
+   
 
     chrome.runtime.sendMessage({command:"checkAuth"},(response)=>{
     console.log(response);
@@ -307,15 +446,14 @@ window.onload = function() {
 
             document.getElementById('zapiszSideButton').style.marginLeft="15px"
 
-              // event po poprawnym zalogowaniu 
             //localStorage.setItem("UserId",response.user)
             localStorage.setItem("login","false")
             localStorage.setItem("userId",response.message.uid)
+            userIdTest = response.message.uid
             localStorage.setItem("haslo",Userpassword)
             tableCreate();
           }
           else{
-          // event po niepoprawnym zalogowaniu 
           
           }
       });
@@ -331,11 +469,12 @@ window.onload = function() {
         chrome.runtime.sendMessage({command:"logoutAuth"},(response)=>{
             console.log(response);
             localStorage.setItem("userId","0")
+            userIdTest = 0
             localStorage.setItem("haslo","0")
-                    var tablePass = document.getElementById("tablePass")
-        if(document.contains(tablePass)){
-            tablePass.remove()
-        }
+            var tablePass = document.getElementById("tablePass")
+            if(document.contains(tablePass)){
+                tablePass.remove()
+            }
         });
     
     })
@@ -375,15 +514,7 @@ window.onload = function() {
      })
 
 
-     function getSite(okno) {
-     chrome.tabs.getSelected(null, function(tab) {
-        var currentURL = document.createElement('a')
-        currentURL.href=tab.url;
-        okno.value = currentURL.hostname
-        localStorage.setItem("stronaZapis",currentURL.hostname)
-    });
-    
-    }
+
 
      zapiszSideButton.addEventListener('click',(e)=>{
         //localStorage.setItem("login","true")
@@ -475,109 +606,16 @@ window.onload = function() {
 
        
      })
-
-     
-
-
-     function tableCreate() {
-        var ilosc = 0
-        var hasla = new Array()
-        var tablePass = document.getElementById("tablePass")
-        if(document.contains(tablePass)){
-            tablePass.remove()
-        }
-
-        chrome.runtime.sendMessage({command:'getCollection', data:{userId: localStorage.userId, hasloMain: localStorage.haslo}}, (response) => {
-            if(response.status=='success')
-            {
-                haslaMain = response.message.tabHasel;
-                ilosc = response.message.iloscWierszy;
-
-                var body = document.getElementById('viewerPanel');
-                var tbl = document.createElement('table');
-                tbl.style.width = '100%';
-               // tbl.setAttribute('border', '1');
-                tbl.id = "tablePass"
-                tbl.style.marginTop = '6px'
-                tbl.style.marginBottom = ' 25px'
-                tbl.style.borderSpacing = '0px'
-                var tbdy = document.createElement('tbody');
-                for (var i = 0; i < 1 + ilosc; i++) {
-                  var tr = document.createElement('tr');
-                  for (var j = 0; j < 4; j++) {
-                    {
-                        if(i==0){ //wiersz z labelami
-                            var td = document.createElement('td');
-                            td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = ""}
-                            if(j==1) {td.textContent = "Login"}
-                            if(j==2) {td.textContent = "Hasło"}
-                            if(j==3) {td.textContent = "Strona"}
-
-                            td.style.borderStyle = 'solid';
-                            td.style.borderWidth = '1.2px';
-                            td.style.borderColor = "white";
-                            td.style.fontFamily ="Advent Pro, sans-serif"
-                            td.style.fontSize = "16px";
-                            td.style.textAlign = "center"
-                            td.style.backgroundColor = 'rgb(36, 36, 41)'
-                            tr.appendChild(td)
-      
-                        } else {
-                            var td = document.createElement('td');
-                            td.appendChild(document.createTextNode('\u0020'))
-                            if(j==0) {td.textContent = i}
-                            if(j==1) {td.textContent = haslaMain[i-1].login}
-                            if(j==2) {td.textContent = haslaMain[i-1].haslo}
-                            if(j==3) {td.textContent = haslaMain[i-1].strona}
-                            td.style.borderStyle = 'solid';
-                            td.style.borderWidth = '1px';
-                            td.style.borderColor = "white";
-                            td.style.fontFamily ="Advent Pro, sans-serif";
-                            td.style.fontSize = "13px";
-                            tr.appendChild(td)
-                            var createClickHandler = function(row) {
-                                return function() {
-                                    if(row.getElementsByTagName("td")[0] != undefined){
-                                        var id = row.getElementsByTagName("td")[0].innerHTML
-                                    }
-                                    if(row.getElementsByTagName("td")[1] != undefined){
-                                        var login = row.getElementsByTagName("td")[1].innerHTML
-                                    }
-                                    if(row.getElementsByTagName("td")[2] != undefined){
-                                        var haslo = row.getElementsByTagName("td")[2].innerHTML
-                                    }
-                                    if(row.getElementsByTagName("td")[3] != undefined){
-                                        var strona = row.getElementsByTagName("td")[3].innerHTML
-                                    }
-
-                                    document.getElementById('editId').value = id
-                                    document.getElementById('editLogin').value = login
-                                    document.getElementById('editHaslo').value = haslo
-                                    document.getElementById('editStrona').value = strona
-                                }
-                            }
-                            tr.onclick = createClickHandler(tr);
-                            if(i == 1){
-                                tr.click()
-                            }
-                        }
-                    }
-                  }
-                  tbdy.appendChild(tr);
-                }
-                tbl.appendChild(tbdy);
-                body.appendChild(tbl)
-                
-            }
-            else{
-                toastr.error("Problem przy wyciągnięciu danych z bazy")
-            }
-            
-        })
-    }
     
-        tableCreate() 
+    
+
+
+} else {
+
+
+    addButtonToPassword();
+}
+
 
 }
 
