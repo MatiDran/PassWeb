@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Password Generator</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="toastr.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body> 
@@ -112,7 +113,7 @@
               </button>
               <button id="pullBtn" class="css-button" >
                 <span class="css-button-icon"><i class="fa fa-tree" aria-hidden="true" id="i_pos"></i></span>
-                <span class="css-button-text">Pull</span>
+                <span class="css-button-text">Set</span>
               </button> 
             </div>
         </div>
@@ -137,9 +138,7 @@
           <span class="css-button-text">Zaloguj się</span>
         </button>
         </div>
-        <div class="Center">
-        <a href="#" class="ref">Lost your password?</a>
-        </div>
+        
         <div class="Center">
         <a href="#"  class="ref" id="registerButton">Register</a>
         </div>
@@ -181,15 +180,13 @@
             <span class="css-button-icon"><i class="fa fa-floppy-o" aria-hidden="true" id="i_pos"></i></span>
             <span class="css-button-text">Zapisz</span>
           </button> 
-         
-          
 
         </div>  
       </div>
 
            
-
-  
+      <script src="jquery-3.5.1.js"></script>
+      <script src="toastr.min.js"></script>
         <script src="js/passwd_generate.js"></script>
         <script src="js/frontend.js"></script>
 
